@@ -35,23 +35,6 @@ export default function App() {
   return (
     <View>
       <StatusBar style="auto" />
-      <TextField
-        placeholder="아이디"
-        helpText="도움말"
-        icon="eyes"
-        isError={false}
-        errorText="에러"
-        passwordType
-        {...name}
-      >
-        <Hi />
-      </TextField>
     </View>
   );
 }
-
-const Hi = styled.View`
-  width: 30px;
-  height: 30px;
-  background-color: #000;
-`;
