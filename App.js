@@ -1,7 +1,11 @@
 import { StatusBar } from "expo-status-bar";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import { useFonts } from "expo-font";
 import { setCustomText } from "react-native-global-props";
+import TextField from "./src/components/common/Input/TextField";
+import { useInput } from "./src/hooks/useInput";
+import styled from "styled-components";
+import Eye from "./src/assets/icons/eyes";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -16,9 +20,8 @@ export default function App() {
     "NotoSansKR-Regular": require("./src/assets/fonts/NotoSansKR/NotoSansKR-Regular.otf"),
     "NotoSansKR-Light": require("./src/assets/fonts/NotoSansKR/NotoSansKR-Light.otf"),
   });
-  if (!fontsLoaded) {
-    return <StatusBar />;
-  }
+  const name = useInput("");
+
   const customTextProps = {
     style: {
       fontFamily: "NotoSansKR-Medium",
@@ -26,9 +29,29 @@ export default function App() {
   };
   setCustomText(customTextProps);
 
+  if (!fontsLoaded) {
+    return <StatusBar />;
+  }
   return (
     <View>
       <StatusBar style="auto" />
+      <TextField
+        placeholder="아이디"
+        helpText="도움말"
+        icon="eyes"
+        isError={false}
+        errorText="에러"
+        passwordType
+        {...name}
+      >
+        <Hi />
+      </TextField>
     </View>
   );
 }
+
+const Hi = styled.View`
+  width: 30px;
+  height: 30px;
+  background-color: #000;
+`;
