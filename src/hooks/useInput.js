@@ -12,5 +12,5 @@ export const useInput = (initialValue, regex) => {
       setValue(event);
     }
   };
-  return [value, onChangeText];
+  return { value, onChangeText };
 };
