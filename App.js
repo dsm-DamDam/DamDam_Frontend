@@ -1,11 +1,7 @@
 import { StatusBar } from "expo-status-bar";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { useFonts } from "expo-font";
 import { setCustomText } from "react-native-global-props";
-import TextField from "./src/components/common/Input/TextField";
-import { useInput } from "./src/hooks/useInput";
-import styled from "styled-components";
-import Eye from "./src/assets/icons/eyes";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -20,7 +16,6 @@ export default function App() {
     "NotoSansKR-Regular": require("./src/assets/fonts/NotoSansKR/NotoSansKR-Regular.otf"),
     "NotoSansKR-Light": require("./src/assets/fonts/NotoSansKR/NotoSansKR-Light.otf"),
   });
-  const name = useInput("");
 
   const customTextProps = {
     style: {
