@@ -16,9 +16,7 @@ export default function App() {
     "NotoSansKR-Regular": require("./src/assets/fonts/NotoSansKR/NotoSansKR-Regular.otf"),
     "NotoSansKR-Light": require("./src/assets/fonts/NotoSansKR/NotoSansKR-Light.otf"),
   });
-  if (!fontsLoaded) {
-    return <StatusBar />;
-  }
+
   const customTextProps = {
     style: {
       fontFamily: "NotoSansKR-Medium",
@@ -26,6 +24,9 @@ export default function App() {
   };
   setCustomText(customTextProps);
 
+  if (!fontsLoaded) {
+    return <StatusBar />;
+  }
   return (
     <View>
       <StatusBar style="auto" />
