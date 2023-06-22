@@ -1,7 +1,11 @@
 import { StatusBar } from "expo-status-bar";
-import { View } from "react-native";
 import { useFonts } from "expo-font";
 import { setCustomText } from "react-native-global-props";
+import { createStackNavigator } from "@react-navigation/stack";
+import { NavigationContainer } from "@react-navigation/native";
+import Home from "./src/screen/Home";
+import Profile from "./src/screen/Profile";
+import "react-native-gesture-handler";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -24,12 +28,22 @@ export default function App() {
   };
   setCustomText(customTextProps);
 
+  const Stack = createStackNavigator();
+
   if (!fontsLoaded) {
     return <StatusBar />;
   }
   return (
-    <View>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator
+        initialRouteName="Home"
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Profile" component={Profile} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
