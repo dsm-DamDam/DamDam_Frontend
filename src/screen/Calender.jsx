@@ -1,11 +1,10 @@
 import styled from "styled-components";
 import { Text } from "react-native";
 
-function Home() {
-
+function Calender({ navigation }) {
   return (
     <Container>
-      <Text>Home</Text>
+      <Text>Calender</Text>
     </Container>
   );
 }
@@ -16,4 +15,4 @@ const Container = styled.View`
   align-items: center;
 `;
 
-export default Home;
+export default Calender;

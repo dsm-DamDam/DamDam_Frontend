@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
-import { theme } from "../../../style/theme";
+import { theme } from "../../style/theme";
 import { useState } from "react";
 import { StyleSheet } from "react-native";
-import Eye from "../../../assets/icons/eyes";
+import _Eye from "../../assets/icons/eyes";
 
 function TextField({
   children,
@@ -41,7 +41,7 @@ function TextField({
           }}
         />
         {passwordType ? (
-          <Eye
+          <_Eye
             isPassword={isPasswordHidden}
             onClick={() => {
               setIsPasswordHidden((prev) => !prev);

@@ -1,11 +1,10 @@
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
 import { setCustomText } from "react-native-global-props";
-import { createStackNavigator } from "@react-navigation/stack";
-import { NavigationContainer } from "@react-navigation/native";
-import Home from "./src/screen/Home";
-import Profile from "./src/screen/Profile";
 import "react-native-gesture-handler";
+import { TapContext } from "./src/useContext/tapContext";
+import { useState } from "react";
+import TabRouter from "./src/Router/Router";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -28,22 +27,13 @@ export default function App() {
   };
   setCustomText(customTextProps);
 
-  const Stack = createStackNavigator();
-
+  const [moveTapState, setMoveTapState] = useState("Home");
   if (!fontsLoaded) {
     return <StatusBar />;
   }
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName="Home"
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="Profile" component={Profile} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <TapContext.Provider value={{ moveTapState, setMoveTapState }}>
+      <TabRouter />
+    </TapContext.Provider>
   );
 }
