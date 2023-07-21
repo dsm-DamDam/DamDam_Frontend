@@ -30,7 +30,7 @@ const eyes = {
   </svg>`,
 };
 
-function Eye({ isPassword, onClick }) {
+function _Eye({ isPassword, onClick }) {
   return (
     <Containar onPress={onClick}>
       {isPassword ? (
@@ -49,4 +49,4 @@ const Containar = styled.TouchableOpacity`
   align-items: center;
 `;
 
-export default Eye;
+export default _Eye;

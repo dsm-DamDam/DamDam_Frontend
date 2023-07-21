@@ -1,7 +1,10 @@
 import { StatusBar } from "expo-status-bar";
-import { View } from "react-native";
 import { useFonts } from "expo-font";
 import { setCustomText } from "react-native-global-props";
+import "react-native-gesture-handler";
+import { TapContext } from "./src/useContext/tapContext";
+import { useState } from "react";
+import TabRouter from "./src/Router/Router";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -24,12 +27,13 @@ export default function App() {
   };
   setCustomText(customTextProps);
 
+  const [moveTapState, setMoveTapState] = useState("Home");
   if (!fontsLoaded) {
     return <StatusBar />;
   }
   return (
-    <View>
-      <StatusBar style="auto" />
-    </View>
+    <TapContext.Provider value={{ moveTapState, setMoveTapState }}>
+      <TabRouter />
+    </TapContext.Provider>
   );
 }
