@@ -1,5 +1,5 @@
-import styled, { css } from "styled-components";
-import { StyleSheet } from "react-native";
+import styled, { css } from "styled-components/native";
+import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 import { useContext } from "react";
 import { TapContext } from "../../useContext/tapContext";
 import { theme } from "../../style/theme";
@@ -36,7 +36,7 @@ const style = StyleSheet.create({
   },
 });
 
-const Container = styled.View`
+const Container = styled(View)`
   background-color: white;
   width: 100%;
   height: 60px;
@@ -47,7 +47,7 @@ const Container = styled.View`
   box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.05);
 `;
 
-const TabBox = styled.TouchableOpacity`
+const TabBox = styled(TouchableOpacity)`
   align-items: center;
   justify-content: center;
   gap: 2px;
@@ -55,14 +55,14 @@ const TabBox = styled.TouchableOpacity`
   width: 15%;
 `;
 
-const IconBox = styled.View`
+const IconBox = styled(View)`
   width: 24px;
   height: 24px;
   justify-content: center;
   align-items: center;
 `;
 
-const Name = styled.Text`
+const Name = styled(Text)`
   font-size: 12px;
   ${(props) =>
     props.isPress &&

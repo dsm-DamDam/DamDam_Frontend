@@ -1,6 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import TabBar from "../components/common/TabBar";
+import { StatusBar } from "react-native";
 
 import Home from "../screen/Home";
 import Profile from "../screen/Profile";
@@ -13,6 +14,7 @@ export default function TabRouter() {
 
   return (
     <NavigationContainer>
+      <StatusBar />
       <Tab.Navigator
         initialRouteName="Home"
         screenOptions={{

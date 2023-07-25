@@ -1,7 +1,7 @@
-import styled, { css } from "styled-components";
+import styled, { css } from "styled-components/native";
 import { theme } from "../../style/theme";
 import { useState } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, TextInput, View, Text } from "react-native";
 import _Eye from "../../assets/icons/eyes";
 
 function TextField({
@@ -77,18 +77,18 @@ const style = StyleSheet.create({
   },
 });
 
-const Container = styled.View`
+const Container = styled(View)`
   margin-top: 150px;
   width: 340px;
 `;
 
-const Caption = styled.Text`
+const Caption = styled(Text)`
   margin-left: 12px;
   margin-top: 6px;
   color: ${theme.color.gray_600};
 `;
 
-const InputBox = styled.View`
+const InputBox = styled(View)`
   width: 100%;
   height: 60px;
   padding: 0 16px;
@@ -103,7 +103,7 @@ const InputBox = styled.View`
     `}
 `;
 
-const TextInput = styled.TextInput`
+const TextInput = styled(TextInput)`
   flex: 1;
   height: 60px;
   font-family: "NotoSansKR-Regular";
