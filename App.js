@@ -4,7 +4,8 @@ import { setCustomText } from "react-native-global-props";
 import "react-native-gesture-handler";
 import { TapContext } from "./src/useContext/tapContext";
 import { useState } from "react";
-import TabRouter from "./src/Router/Router";
+import Router from "./src/Router/Router";
+import Login from "./src/screen/login/login";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -33,7 +34,7 @@ export default function App() {
   }
   return (
     <TapContext.Provider value={{ moveTapState, setMoveTapState }}>
-      <TabRouter />
+      <Router />
     </TapContext.Provider>
   );
 }
