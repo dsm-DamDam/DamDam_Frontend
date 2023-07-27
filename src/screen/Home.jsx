@@ -1,6 +1,8 @@
 import { styled } from "styled-components/native";
 import { Image, Text, View } from "react-native";
 import { theme } from "../style/theme";
+import ProgressCircleComponent from "../components/chart/RadialBar";
+import ConnectionStatusIndicator from "../components/etc/ConnectionStatusIndicator";
 
 function Home() {
   return (
@@ -20,7 +22,15 @@ function Home() {
         </Profile>
         <PointText>400P</PointText>
       </Header>
-      <Main></Main>
+      <Main>
+        <DayCountAndID>
+          <DayCountText>
+            <DayValue>{13}</DayValue> 일째 노력 중
+          </DayCountText>
+          <ConnectionStatusIndicator />
+        </DayCountAndID>
+        <ProgressCircleComponent currentValue={3} maxValue={5} />
+      </Main>
       <Body></Body>
     </Container>
   );
@@ -51,7 +61,7 @@ const ProfileImgWrapper = styled(View)`
   height: 40px;
   border-width: 1px;
   border-color: ${theme.color.gray_300};
-  border-radius: 50%;
+  border-radius: 100px;
   overflow: hidden;
 `;
 const ProfileImg = styled(Image)`
@@ -69,8 +79,27 @@ const PointText = styled(Text)`
 `;
 const Main = styled(View)`
   width: 100%;
-  flex: 4;
+  flex: 5;
   background-color: ${theme.color.gray_100};
+  padding: 0 5%;
+  align-items: center;
+`;
+const DayCountAndID = styled(View)`
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 0;
+`;
+const DayValue = styled(Text)`
+  color: ${theme.color.green_700};
+  font-family: "Roboto-Bold";
+  font-size: 20px;
+`;
+const DayCountText = styled(Text)`
+  color: ${theme.color.gray_800};
+  font-family: "NotoSansKR-Regular";
+  font-size: 14px;
 `;
 const Body = styled(View)`
   width: 100%;
