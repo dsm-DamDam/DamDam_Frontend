@@ -1,7 +1,6 @@
 import Svg, { Path } from "react-native-svg";
-import { theme } from "../../style/theme";
 
-function _User_info({ isPress = false }) {
+function _User_info() {
   return (
     <Svg
       width="28"
