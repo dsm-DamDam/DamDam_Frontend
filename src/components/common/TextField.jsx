@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import { theme } from "../../style/theme";
 import { useState } from "react";
 import { StyleSheet } from "react-native";
-import _Eye from "../../assets/icons/eyes";
+import _Eye from "../../assets/icons/_eyes";
 
 function TextField({
   children,
@@ -16,7 +16,7 @@ function TextField({
 }) {
   const [isFocus, setIsFocus] = useState(false);
   const [isErrorState, setIsErrorState] = useState(isError);
-  const [isPasswordHidden, setIsPasswordHidden] = useState(true);
+  const [isPasswordHidden, setIsPasswordHidden] = useState(false);
 
   return (
     <Container>
@@ -78,7 +78,6 @@ const style = StyleSheet.create({
 });
 
 const Container = styled.View`
-  margin-top: 150px;
   width: 340px;
 `;
 
