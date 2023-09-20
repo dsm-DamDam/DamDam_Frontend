@@ -5,29 +5,46 @@ import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/core";
 import { theme } from "../style/theme";
 import TextField from "../components/common/TextField";
+import { useInput } from "../hooks/useInput";
 
 function Login({ navigation }) {
-  const [isSelected, setSelection] = useState(false);
   const navi = useNavigation();
+  const [isSelected, setSelection] = useState(false);
+  const { value, onChangeText } = useInput("");
+  const { value: satte, onChangeText: gjhhgj } = useInput("");
 
   return (
     <Container>
       <Logo source={require("../assets/images/LoginLogo.png")} />
-      <TextField_ placeholder="아이디" />
-      <TextField_ placeholder="비밀번호" passwordType />
+      <TextField_
+        value={value}
+        onChangeText={onChangeText}
+        placeholder="아이디"
+      />
+      <TextField_
+        value={satte}
+        onChangeText={gjhhgj}
+        placeholder="비밀번호"
+        passwordType
+      />
+
+      <CheckboxContainer>
+        <Pressable
+          onPress={() => {
+            setSelection(!isSelected);
+          }}
+        >
+          <AutoButton color={isSelected} />
+        </Pressable>
+        <AutoText>자동 로그인</AutoText>
+      </CheckboxContainer>
 
       <Pressable
         onPress={() => {
-          setSelection(!isSelected);
+          navi.navigate("TabRouter");
         }}
+        disabled={!value}
       >
-        <CheckboxContainer>
-          <AutoButton color={isSelected} />
-          <AutoText>자동 로그인</AutoText>
-        </CheckboxContainer>
-      </Pressable>
-
-      <Pressable onPress={() => navi.navigate("TabRouter")}>
         <LoginButton>로그인</LoginButton>
       </Pressable>
       <SUBox>
@@ -100,7 +117,5 @@ const NotMember = styled(Text)`
 const SignUp = styled(Text)`
   color: ${theme.color.balck};
 `;
-
-const CheckBox = styled(Pressable)``;
 
 export default Login;
