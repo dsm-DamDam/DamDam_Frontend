@@ -7,7 +7,8 @@ import { useInput } from "../../hooks/useInput";
 
 function Signup_2({ navigation }) {
   const navi = useNavigation();
-  const { value, onChangeText } = useInput("");
+  const { value: emailValue, onChangeText: emailOnChangeText } = useInput("");
+  const { value: numValue, onChangeText: numOnchangeText } = useInput("");
 
   return (
     <Container>
@@ -20,22 +21,26 @@ function Signup_2({ navigation }) {
       <Title>이메일 인증</Title>
       <Sub>계정 보호를 위해 이메일 인증이 필요해요</Sub>
       <TextField_
-        value={value}
-        onChangeText={onChangeText}
+        value={emailValue}
+        onChangeText={emailOnChangeText}
         placeholder="이메일"
       >
         <Pressable
           onPress={() => {
             console.log("눌림");
           }}
-          disabled={!value}
+          disabled={!emailValue}
         >
-          <Send disabled={!value}>
+          <Send>
             <SendT>발송</SendT>
           </Send>
         </Pressable>
       </TextField_>
-      <TextField_ placeholder="인증번호" />
+      <TextField_
+        value={numValue}
+        onChangeText={numOnchangeText}
+        placeholder="인증번호"
+      />
       <MoveBox>
         <BackBox>
           <Pressable onPress={() => navi.navigate("Signup_1")}>
@@ -43,7 +48,12 @@ function Signup_2({ navigation }) {
           </Pressable>
         </BackBox>
         <NextBox>
-          <Pressable onPress={() => navi.navigate("Signup_3")}>
+          <Pressable
+            onPress={() => {
+              navi.navigate("Signup_3");
+            }}
+            disabled={!emailValue || !numValue}
+          >
             <Next>다음</Next>
           </Pressable>
         </NextBox>

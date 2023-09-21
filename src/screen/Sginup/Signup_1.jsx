@@ -3,9 +3,11 @@ import TextField from "../../components/common/TextField";
 import { Text, View, Pressable, Image } from "react-native";
 import { theme } from "../../style/theme";
 import { useNavigation } from "@react-navigation/core";
+import { useInput } from "../../hooks/useInput";
 
 function Signup_1({ navigation }) {
   const navi = useNavigation();
+  const { value, onChangeText } = useInput("");
 
   return (
     <Container>
@@ -17,9 +19,18 @@ function Signup_1({ navigation }) {
       </Pressable>
       <Title>인증코드 입력</Title>
       <Sub>제품 하단에 인증코드가 표기되어있어요</Sub>
-      <TextField_ placeholder="인증코드" />
+      <TextField_
+        value={value}
+        onChangeText={onChangeText}
+        placeholder="인증코드"
+      />
       <NextBox>
-        <Pressable onPress={() => navi.navigate("Signup_2")}>
+        <Pressable
+          onPress={() => {
+            navi.navigate("Signup_2");
+          }}
+          disabled={!value}
+        >
           <Next>다음</Next>
         </Pressable>
       </NextBox>

@@ -3,9 +3,11 @@ import TextField from "../../components/common/TextField";
 import { Text, View, Pressable, Image } from "react-native";
 import { theme } from "../../style/theme";
 import { useNavigation } from "@react-navigation/core";
+import { useInput } from "../../hooks/useInput";
 
 function Signup_4({ navigation }) {
   const navi = useNavigation();
+  const { value, onChangeText } = useInput("");
 
   return (
     <Container>
@@ -17,7 +19,11 @@ function Signup_4({ navigation }) {
       </Pressable>
       <Title>닉네임 설정</Title>
       <Sub>담담에서 사용하실 닉네임을 정해주세요</Sub>
-      <TextField_ placeholder="닉네임" />
+      <TextField_
+        value={value}
+        onChangeText={onChangeText}
+        placeholder="닉네임"
+      />
       <MoveBox>
         <BackBox>
           <Pressable onPress={() => navi.navigate("Signup_3")}>
@@ -25,7 +31,12 @@ function Signup_4({ navigation }) {
           </Pressable>
         </BackBox>
         <NextBox>
-          <Pressable onPress={() => navi.navigate("Signup_finish")}>
+          <Pressable
+            onPress={() => {
+              navi.navigate("Signup_finish");
+            }}
+            disabled={!value}
+          >
             <Next>다음</Next>
           </Pressable>
         </NextBox>

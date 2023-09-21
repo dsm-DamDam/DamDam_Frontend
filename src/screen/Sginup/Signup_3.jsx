@@ -3,9 +3,13 @@ import TextField from "../../components/common/TextField";
 import { Text, View, Pressable, Image } from "react-native";
 import { theme } from "../../style/theme";
 import { useNavigation } from "@react-navigation/core";
+import { useInput } from "../../hooks/useInput";
 
 function Signup_3({ navigation }) {
   const navi = useNavigation();
+  const { value: idValue, onChangeText: idOnchangeText } = useInput("");
+  const { value: pwValue, onChangeText: pwOnChangeText } = useInput("");
+  const { value: okValue, onChangeText: okOnChangeText } = useInput("");
 
   return (
     <Container>
@@ -18,15 +22,21 @@ function Signup_3({ navigation }) {
       <Title>아이디/비밀번호 설정</Title>
       <Sub>안전한 계정을 만들기위한 설정이에요</Sub>
       <TextField_
+        value={idValue}
+        onChangeText={idOnchangeText}
         placeholder="아이디"
         helpText="사용하실 아이디를 입력해주세요"
       />
       <TextField_
+        value={pwValue}
+        onChangeText={pwOnChangeText}
         placeholder="비밀번호"
         helpText="8자 이상, 특수문자(@, $, !, %, *, #, ?, &)를 포함해야 합니다"
         passwordType
       />
       <TextField_
+        value={okValue}
+        onChangeText={okOnChangeText}
         placeholder="비밀번호 확인"
         helpText="비밀번호를 한번 더 입력해주세요"
         passwordType
@@ -38,7 +48,12 @@ function Signup_3({ navigation }) {
           </Pressable>
         </BackBox>
         <NextBox>
-          <Pressable onPress={() => navi.navigate("Signup_4")}>
+          <Pressable
+            onPress={() => {
+              navi.navigate("Signup_4");
+            }}
+            disabled={!idValue || !pwValue || !okValue}
+          >
             <Next>다음</Next>
           </Pressable>
         </NextBox>
