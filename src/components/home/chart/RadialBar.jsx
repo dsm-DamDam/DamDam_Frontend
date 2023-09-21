@@ -1,5 +1,5 @@
 import { ProgressCircle } from "react-native-svg-charts";
-import { theme } from "../../style/theme";
+import { theme } from "../../../style/theme";
 import styled from "styled-components/native";
 import { Text, View } from "react-native";
 

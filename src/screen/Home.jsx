@@ -1,8 +1,12 @@
 import { styled } from "styled-components/native";
 import { Image, Text, View } from "react-native";
 import { theme } from "../style/theme";
-import ProgressCircleComponent from "../components/chart/RadialBar";
-import ConnectionStatusIndicator from "../components/etc/ConnectionStatusIndicator";
+import ProgressCircleComponent from "../components/home/chart/RadialBar";
+import ConnectionStatusIndicator from "../components/home/ConnectionStatusIndicator";
+import NumberOfTime from "../components/home/NumberOfTime";
+import ToDayTips from "../components/home/Tip";
+import Promotion from "../components/home/Promotion";
+import TextField from "../components/common/TextField";
 
 function Home() {
   return (
@@ -30,8 +34,13 @@ function Home() {
           <ConnectionStatusIndicator />
         </DayCountAndID>
         <ProgressCircleComponent currentValue={3} maxValue={5} />
+        <NumberOfTime />
       </Main>
-      <Body></Body>
+      <Body>
+        <TextField />
+        <ToDayTips />
+        <Promotion />
+      </Body>
     </Container>
   );
 }
@@ -81,8 +90,9 @@ const Main = styled(View)`
   width: 100%;
   flex: 5;
   background-color: ${theme.color.gray_100};
-  padding: 0 5%;
+  padding: 2% 5%;
   align-items: center;
+  gap: 20px;
 `;
 const DayCountAndID = styled(View)`
   width: 100%;
@@ -104,6 +114,7 @@ const DayCountText = styled(Text)`
 const Body = styled(View)`
   width: 100%;
   flex: 3;
+  padding: 2% 5%;
   background-color: ${theme.color.white};
 `;
 

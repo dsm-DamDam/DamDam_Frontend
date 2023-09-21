@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components/native";
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 import { useContext } from "react";
-import { TapContext } from "../../useContext/tapContext";
+import { TapContext } from "../../useContext/Context";
 import { theme } from "../../style/theme";
 import { tabbar_info_list } from "../../constants/tabBar";
 import { useNavigation } from "@react-navigation/native";
