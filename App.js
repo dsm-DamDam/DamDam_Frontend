@@ -4,7 +4,7 @@ import { setCustomText } from "react-native-global-props";
 import "react-native-gesture-handler";
 import { TapContext } from "./src/useContext/Context";
 import { useState } from "react";
-import Router from "./src/Router/Router";
+import LoginRouter from "./src/Router/LoginRouter";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -28,13 +28,13 @@ export default function App() {
   setCustomText(customTextProps);
 
   const [moveTapState, setMoveTapState] = useState("Home");
-  
+
   if (!fontsLoaded) {
     return <StatusBar />;
   }
   return (
     <TapContext.Provider value={{ moveTapState, setMoveTapState }}>
-      <Router />
+      <LoginRouter />
     </TapContext.Provider>
   );
 }

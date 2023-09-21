@@ -6,8 +6,9 @@ import Signup_4 from "../screen/Sginup/Signup_4";
 import Signup_finish from "../screen/Sginup/Signup_finish";
 import { createStackNavigator } from "@react-navigation/stack";
 import TabRouter from "./Router";
+import { NavigationContainer } from "@react-navigation/native";
 
-export default function Router() {
+export default function LoginRouter() {
   const Stack = createStackNavigator();
   return (
     <NavigationContainer>
