@@ -2,7 +2,7 @@ import styled, { css } from "styled-components/native";
 import { theme } from "../../style/theme";
 import { useState } from "react";
 import { StyleSheet, TextInput, View, Text } from "react-native";
-import _Eye from "../../assets/icons/eyes";
+import _Eye from "../../assets/icons/_eyes";
 
 function TextField({
   children,
@@ -16,7 +16,7 @@ function TextField({
 }) {
   const [isFocus, setIsFocus] = useState(false);
   const [isErrorState, setIsErrorState] = useState(isError);
-  const [isPasswordHidden, setIsPasswordHidden] = useState(true);
+  const [isPasswordHidden, setIsPasswordHidden] = useState(false);
 
   return (
     <Container>
@@ -26,7 +26,7 @@ function TextField({
           (isFocus && style.FocusInput) || (isErrorState && style.ErrorInput)
         }
       >
-        <TextInput
+        <TextInput_
           value={value}
           onChangeText={onChangeText}
           placeholder={placeholder}
@@ -103,7 +103,7 @@ const InputBox = styled(View)`
     `}
 `;
 
-const TextInput = styled(TextInput)`
+const TextInput_ = styled(TextInput)`
   flex: 1;
   height: 60px;
   font-family: "NotoSansKR-Regular";
