@@ -3,6 +3,7 @@ import styled from "styled-components/native";
 import { theme } from "../../style/theme";
 import TextField from "../../components/common/TextField";
 import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 
 function Profile() {
   const [inputState, setInputState] = useState({
@@ -12,18 +13,34 @@ function Profile() {
   });
 
   const onChange = (text) => (value) => {
-    setInputState((prevstate) => ({...prevstate, [text]: value }));
-    console.log(inputState);
+    setInputState((prevstate) => ({ ...prevstate, [text]: value }));
+    // console.log(inputState);
   };
 
+  // const MyComponent = () => {
+  //   const [isVisible, setIsVisible] = useState(false);
+  // };
+  const navigatioin = useNavigation();
   return (
     <InfoContainer>
+      {false && (
+        <ActoContainer>
+          <ActionToast>변경사항을 저장할까요?</ActionToast>
+          <ActoBtnContainer>
+            <ActoBtnCancel>
+              <ActoTextCancel>취소</ActoTextCancel>
+            </ActoBtnCancel>
+            <ActoBtnSave>
+              <ActoTextSave>저장</ActoTextSave>
+            </ActoBtnSave>
+          </ActoBtnContainer>
+        </ActoContainer>
+      )}
+
       <InfoTitle>
         <MainName>회원정보</MainName>
       </InfoTitle>
-
       <InfoPhoto />
-
       <InfoNameBox>
         <TitleName>닉네임</TitleName>
         <TextField
@@ -31,7 +48,6 @@ function Profile() {
           onChangeText={onChange("nickname")}
         ></TextField>
       </InfoNameBox>
-
       <InfoNameBox>
         <TitleName>아이디</TitleName>
         <TextField
@@ -39,22 +55,23 @@ function Profile() {
           onChangeText={onChange("id")}
         ></TextField>
       </InfoNameBox>
-
       <InfoNameBox>
         <TitleName>이메일</TitleName>
         <TextField
           value={inputState.email}
           onChangeText={onChange("email")}
+          disable={true}
         ></TextField>
       </InfoNameBox>
-
       <InfoNameBox>
         <TitleName>비밀번호</TitleName>
-        {/* <InfoPassBox>
-            
-        </InfoPassBox> */}
-        <TextField>
-          <PassChangeBox>
+        {/* <InfoPassBox></InfoPassBox> */}
+        <TextField disable={true}>
+          <PassChangeBox
+            onPress={() => {
+              navigatioin.navigate("PassChangePage");
+            }}
+          >
             <PassChangeText>수정</PassChangeText>
           </PassChangeBox>
         </TextField>
@@ -75,9 +92,58 @@ function Profile() {
 
 const InfoContainer = styled(View)`
   flex: 1;
-  padding-top: 10%;
+  padding-top: 5%;
   align-items: center;
   background-color: ${theme.color.white};
+`;
+
+const ActoContainer = styled(View)`
+  width: 340px;
+  height: 50px;
+  border-width: 1px;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  background-color: ${theme.color.white};
+  border-color: ${theme.color.gray_300};
+`;
+
+const ActionToast = styled(Text)`
+  font-size: 12px;
+`;
+
+const ActoBtnContainer = styled(View)`
+  width: auto;
+  height: auto;
+  flex-direction: row;
+  margin-left: 10px;
+`;
+
+const ActoBtnCancel = styled(TouchableOpacity)`
+  width: 50px;
+  height: 35px;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ActoTextCancel = styled(Text)`
+  font-size: 13px;
+`;
+
+const ActoBtnSave = styled(TouchableOpacity)`
+  width: 50px;
+  height: 35px;
+  margin-left: 10px;
+  border-radius: 5px;
+  align-items: center;
+  justify-content: center;
+  background-color: ${theme.color.brand_color};
+`;
+
+const ActoTextSave = styled(Text)`
+  font-size: 13px;
+  color: ${theme.color.white};
 `;
 
 const InfoTitle = styled(View)`
@@ -87,8 +153,10 @@ const InfoTitle = styled(View)`
   justify-content: center;
   margin-bottom: 10%;
 `;
+
 const MainName = styled(Text)`
   font-size: 18px;
+  color: ${theme.color.gray_700};
 `;
 
 const InfoPhoto = styled(TouchableOpacity)`
@@ -100,8 +168,8 @@ const InfoPhoto = styled(TouchableOpacity)`
 `;
 
 const InfoNameBox = styled(View)`
-  height: auto;
   width: auto;
+  height: auto;
 `;
 
 const TitleName = styled(Text)`

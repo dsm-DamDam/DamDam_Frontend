@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { theme } from "../../style/theme";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import _Eye from "../../assets/icons/_eyes";
 
@@ -13,10 +13,17 @@ function TextField({
   value,
   onChangeText,
   passwordType,
+  disable,
 }) {
   const [isFocus, setIsFocus] = useState(false);
   const [isErrorState, setIsErrorState] = useState(isError);
   const [isPasswordHidden, setIsPasswordHidden] = useState(false);
+
+  useEffect(() => {
+    if (passwordType) {
+      setIsPasswordHidden(true);
+    }
+  }, []);
 
   return (
     <Container>
@@ -32,6 +39,8 @@ function TextField({
           placeholder={placeholder}
           placeholderTextColor={theme.color.gray_600}
           secureTextEntry={isPasswordHidden}
+          editable={!disable}
+          selectTextOnFocus={!disable}
           onFocus={() => {
             setIsFocus(true);
             setIsErrorState(false);
