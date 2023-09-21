@@ -10,20 +10,20 @@ import { useInput } from "../hooks/useInput";
 function Login({ navigation }) {
   const navi = useNavigation();
   const [isSelected, setSelection] = useState(false);
-  const { value, onChangeText } = useInput("");
-  const { value: satte, onChangeText: gjhhgj } = useInput("");
+  const { value: idValue, onChangeText: idOnchangeText } = useInput("");
+  const { value: pwValue, onChangeText: pwOnChangeText } = useInput("");
 
   return (
     <Container>
       <Logo source={require("../assets/images/LoginLogo.png")} />
       <TextField_
-        value={value}
-        onChangeText={onChangeText}
+        value={idValue}
+        onChangeText={idOnchangeText}
         placeholder="아이디"
       />
       <TextField_
-        value={satte}
-        onChangeText={gjhhgj}
+        value={pwValue}
+        onChangeText={pwOnChangeText}
         placeholder="비밀번호"
         passwordType
       />
@@ -43,7 +43,7 @@ function Login({ navigation }) {
         onPress={() => {
           navi.navigate("TabRouter");
         }}
-        disabled={!value}
+        disabled={!idValue || !pwValue}
       >
         <LoginButton>로그인</LoginButton>
       </Pressable>
