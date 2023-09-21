@@ -13,6 +13,7 @@ function TextField({
   value,
   onChangeText,
   passwordType,
+  disable,
 }) {
   const [isFocus, setIsFocus] = useState(false);
   const [isErrorState, setIsErrorState] = useState(isError);
@@ -38,6 +39,8 @@ function TextField({
           placeholder={placeholder}
           placeholderTextColor={theme.color.gray_600}
           secureTextEntry={isPasswordHidden}
+          editable={!disable}
+          selectTextOnFocus={!disable}
           onFocus={() => {
             setIsFocus(true);
             setIsErrorState(false);

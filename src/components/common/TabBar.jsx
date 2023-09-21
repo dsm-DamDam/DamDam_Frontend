@@ -6,7 +6,7 @@ import { theme } from "../../style/theme";
 import { tabbar_info_list } from "../../constants/tabBar";
 import { useNavigation } from "@react-navigation/native";
 
-function TabBar() {
+export default function TabBar() {
   const { moveTapState, setMoveTapState } = useContext(TapContext);
   const navigatioin = useNavigation();
 
@@ -39,7 +39,7 @@ const style = StyleSheet.create({
 const Container = styled(View)`
   background-color: white;
   width: 100%;
-  height: 60px;
+  height: 9%;
   justify-content: center;
   align-items: center;
   flex-direction: row;
@@ -70,5 +70,3 @@ const Name = styled(Text)`
       color: ${theme.color.brand_color};
     `}
 `;
-
-export default TabBar;
