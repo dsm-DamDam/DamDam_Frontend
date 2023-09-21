@@ -6,14 +6,13 @@ import Calender from "../screen/Calender";
 import Diary from "../screen/Diary";
 import ProfileRouter from "./ProfileRouter";
 import ShopRouter from "./Shop/ShopRouter";
-import { NavigationContainer } from "@react-navigation/native";
 
 export default function TabRouter() {
   const Tab = createBottomTabNavigator();
 
   return (
     <Tab.Navigator
-      initialRouteName="home"
+      initialRouteName="Home"
       screenOptions={{
         headerShown: false,
       }}
