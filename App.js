@@ -5,7 +5,6 @@ import "react-native-gesture-handler";
 import { TapContext } from "./src/useContext/Context";
 import { useState } from "react";
 import Router from "./src/Router/Router";
-import Login from "./src/screen/login/login";
 
 export default function App() {
   const [fontsLoaded] = useFonts({

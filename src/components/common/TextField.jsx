@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components/native";
 import { theme } from "../../style/theme";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet, TextInput, View, Text } from "react-native";
 import _Eye from "../../assets/icons/_eyes";
 
@@ -17,6 +17,12 @@ function TextField({
   const [isFocus, setIsFocus] = useState(false);
   const [isErrorState, setIsErrorState] = useState(isError);
   const [isPasswordHidden, setIsPasswordHidden] = useState(false);
+
+  useEffect(() => {
+    if (passwordType) {
+      setIsPasswordHidden(true);
+    }
+  }, []);
 
   return (
     <Container>
@@ -78,8 +84,8 @@ const style = StyleSheet.create({
 });
 
 const Container = styled(View)`
-  margin-top: 150px;
   width: 340px;
+  margin-bottom: 14px;
 `;
 
 const Caption = styled(Text)`
