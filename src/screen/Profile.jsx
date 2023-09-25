@@ -131,6 +131,7 @@ const Point_number = styled(Text)`
 `;
 
 const Center_line = styled(View)`
+  width: 1px;
   border-width: 100px;
   height: 40px;
   margin-left: 15%;
