@@ -2,23 +2,23 @@ import { styled } from "styled-components/native";
 import { View, Text } from "react-native";
 import { theme } from "../../style/theme";
 
-function Times() {
+function Times({ total_count, day }) {
   return (
     <TimeContainer>
-      <DateText>{'오늘'}</DateText>
-      <CounterText>{'1회'}</CounterText>
+      <DateText>{day}</DateText>
+      <CounterText>{total_count}회</CounterText>
     </TimeContainer>
   );
 }
 
-export default function NumberOfTime() {
+export default function NumberOfTime({ currentValue }) {
   return (
     <Container>
-      <Times />
+      <Times total_count={currentValue} day="오늘" />
       <Contour />
-      <Times />
+      <Times total_count={3} day="이번주" />
       <Contour />
-      <Times />
+      <Times total_count={15} day="이번달" />
     </Container>
   );
 }
@@ -50,6 +50,6 @@ const DateText = styled(Text)`
 
 const CounterText = styled(Text)`
   font-size: 18px;
-  font-family: 'NotoSansKR-Medium';
+  font-family: "NotoSansKR-Medium";
   color: ${theme.color.gray_900};
-`
+`;

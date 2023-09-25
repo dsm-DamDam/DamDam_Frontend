@@ -7,8 +7,31 @@ import NumberOfTime from "../components/home/NumberOfTime";
 import ToDayTips from "../components/home/Tip";
 import Promotion from "../components/home/Promotion";
 import TextField from "../components/common/TextField";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 function Home() {
+  const [total_count, setTotal_count] = useState("");
+  const [today, setToday] = useState("");
+
+  const GetData = () => {
+    axios({
+      method: "GET",
+      url: `http://172.20.10.4:8080/item/daily-total-cnt`,
+    })
+      .then((res) => {
+        console.log(res.data);
+        setTotal_count(res.data.total_count);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  useEffect(() => {
+    GetData();
+  }, []);
+
   return (
     <Container>
       <Header>
@@ -33,11 +56,10 @@ function Home() {
           </DayCountText>
           <ConnectionStatusIndicator />
         </DayCountAndID>
-        <ProgressCircleComponent currentValue={3} maxValue={5} />
-        <NumberOfTime />
+        <ProgressCircleComponent currentValue={total_count} maxValue={25} />
+        <NumberOfTime currentValue={total_count} />
       </Main>
       <Body>
-        <TextField />
         <ToDayTips />
         <Promotion />
       </Body>
