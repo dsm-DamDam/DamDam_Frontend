@@ -48,7 +48,6 @@ const MaxValueText = styled(Text)`
 `;
 const Coments = styled(Text)`
   color: ${theme.color.balck};
-  font-family: "NotoSansKR-Medium";
   font-size: 15px;
   line-height: 18px;
 `;

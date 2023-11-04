@@ -65,7 +65,6 @@ const BrandText = styled(Text)`
 const GoodsTitle = styled(Text)`
   font-size: 18px;
   color: ${theme.color.balck};
-  font-family: "NotoSansKR-Medium";
   line-height: 24px;
 `;
 const Price = styled(Text)`

@@ -6,12 +6,32 @@ import { useNavigation } from "@react-navigation/core";
 import { theme } from "../style/theme";
 import TextField from "../components/common/TextField";
 import { useInput } from "../hooks/useInput";
+import axios from "axios";
 
 function Login({ navigation }) {
   const navi = useNavigation();
   const [isSelected, setSelection] = useState(false);
   const { value: idValue, onChangeText: idOnchangeText } = useInput("");
   const { value: pwValue, onChangeText: pwOnChangeText } = useInput("");
+
+  //userID - dsm0000
+  //PW - dsm2310!
+
+  const Login = async () => {
+    await axios
+      .post(`${process.env.REACT_APP_BASE_URL}/login`, {
+        userID: idValue,
+        password: pwValue,
+      })
+      .then((res) => {
+        return JSON(res);
+      })
+      .then((res) => {
+        console.log(res);
+        localStorage.setItem("accessToken", res.accessToken);
+        navi.navigate("TabRouter");
+      });
+  };
 
   return (
     <Container>
@@ -39,12 +59,7 @@ function Login({ navigation }) {
         <AutoText>자동 로그인</AutoText>
       </CheckboxContainer>
 
-      <Pressable
-        onPress={() => {
-          navi.navigate("TabRouter");
-        }}
-        disabled={!idValue || !pwValue}
-      >
+      <Pressable onPress={Login} disabled={!idValue || !pwValue}>
         <LoginButton>로그인</LoginButton>
       </Pressable>
       <SUBox>

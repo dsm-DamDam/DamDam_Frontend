@@ -17,7 +17,7 @@ function Home() {
   const GetData = () => {
     axios({
       method: "GET",
-      url: `http://172.20.10.4:8080/item/daily-total-cnt`,
+      url: `${process.env.REACT_APP_BASE_URL}/item/daily-total-cnt`,
     })
       .then((res) => {
         console.log(res.data);

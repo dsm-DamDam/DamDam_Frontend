@@ -50,6 +50,5 @@ const DateText = styled(Text)`
 
 const CounterText = styled(Text)`
   font-size: 18px;
-  font-family: "NotoSansKR-Medium";
   color: ${theme.color.gray_900};
 `;

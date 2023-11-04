@@ -6,9 +6,24 @@ import _Light_Mode from "../assets/icons/_light_mode";
 import _Support from "../assets/icons/_support";
 import _Logout from "../assets/icons/_logout";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 
 function Profile() {
   const navigatioin = useNavigation();
+
+  const Logout = async () => {
+    await axios
+      .delete(`${process.env.REACT_APP_BASE_URL}/logout`, {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      })
+      .then(() => {
+        localStorage.removeItem("accessToken");
+        navigatioin.navigate("Login");
+      });
+  };
+
   return (
     <Container>
       <Photo />
@@ -64,7 +79,7 @@ function Profile() {
         </TextWraaper>
       </Userbox_sup>
 
-      <Userbox_log>
+      <Userbox_log onPress={() => {}}>
         <UserCircle>
           <_Logout />
         </UserCircle>
