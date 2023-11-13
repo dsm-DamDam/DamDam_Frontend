@@ -19,7 +19,7 @@ function Login({ navigation }) {
 
   const Login = async () => {
     await axios
-      .post(`${process.env.REACT_APP_BASE_URL}/login`, {
+      .post(`${process.env.REACT_APP_BASE_URL}/user/login`, {
         userID: idValue,
         password: pwValue,
       })
