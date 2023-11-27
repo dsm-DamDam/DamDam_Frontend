@@ -1,23 +1,17 @@
-import { Text, View, TouchableOpacity, TextInput, Alert } from "react-native";
-import styled from "styled-components/native";
-import { theme } from "../../style/theme";
-import TextField from "../../components/common/TextField";
-import { useState } from "react";
-import { useInput } from "../../hooks/useInput";
 import { useNavigation } from "@react-navigation/native";
+import { Text, TouchableOpacity, View } from "react-native";
+import styled from "styled-components/native";
 import _Left_Arrow from "../../assets/icons/_left_arrow";
+import TextField from "../../components/common/TextField";
+import { useInput } from "../../hooks/useInput";
+import { theme } from "../../style/theme";
 
 function PassChangePage() {
-  const [inputState, setInputState] = useState({
-    Previous: "",
-    NewPass: "",
-    CheckPass: "",
+  const { value, onChangeText } = useInput({
+    previous: "",
+    newPass: "",
+    checkPass: "",
   });
-
-  const onChange = (text) => (value) => {
-    setInputState((prevstate) => ({ ...prevstate, [text]: value }));
-    // console.log(inputState);
-  };
 
   const navigatioin = useNavigation();
   return (
@@ -42,22 +36,22 @@ function PassChangePage() {
 
         <TextFieldContainer>
           <TextField
-            value={inputState.Previous}
-            onChangeText={onChange("Previous")}
+            value={value.previous}
+            onChangeText={(text) => onChangeText("previous", text)}
             helpText="도움말"
             placeholder="기존비밀번호"
             passwordType={true}
           ></TextField>
           <TextField
-            value={inputState.NewPass}
-            onChangeText={onChange("NewPass")}
+            value={value.newPass}
+            onChangeText={(text) => onChangeText("newPass", text)}
             helpText="도움말"
             placeholder="변경할 비밀번호"
             passwordType={true}
           ></TextField>
           <TextField
-            value={inputState.CheckPass}
-            onChangeText={onChange("CheckPass")}
+            value={value.checkPass}
+            onChangeText={(text) => onChangeText("checkPass", text)}
             helpText="도움말"
             placeholder="비밀번호 확인"
             passwordType={true}

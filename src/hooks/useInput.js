@@ -3,13 +3,13 @@ import { useState } from "react";
 // initialValue = 초기값, regex = 정규식
 export const useInput = (initialValue, regex) => {
   const [value, setValue] = useState(initialValue);
-  const onChangeText = (event) => {
+  const onChangeText = (name, event) => {
     let willUpdate = true;
     if (typeof regex === "string") {
-      willUpdate = regex.test(value);
+      willUpdate = regex.test(value[name]);
     }
     if (willUpdate) {
-      setValue(event);
+      setValue((prev) => ({ ...prev, [name]: event }));
     }
   };
   return { value, onChangeText };

@@ -1,10 +1,10 @@
-import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
-import { setCustomText } from "react-native-global-props";
-import "react-native-gesture-handler";
-import { TapContext } from "./src/useContext/Context";
+import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
+import "react-native-gesture-handler";
+import { setCustomText } from "react-native-global-props";
 import LoginRouter from "./src/Router/LoginRouter";
+import { TapContext } from "./src/useContext/Context";
 
 export default function App() {
   const [fontsLoaded] = useFonts({

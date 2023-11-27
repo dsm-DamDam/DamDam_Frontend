@@ -1,15 +1,17 @@
+import { useNavigation } from "@react-navigation/core";
+import { Image, Pressable, Text, View } from "react-native";
 import styled from "styled-components/native";
 import TextField from "../../components/common/TextField";
-import { Text, View, Pressable, Image } from "react-native";
-import { theme } from "../../style/theme";
-import { useNavigation } from "@react-navigation/core";
 import { useInput } from "../../hooks/useInput";
+import { theme } from "../../style/theme";
 
-function Signup_3({ navigation }) {
+function Signup_3() {
   const navi = useNavigation();
-  const { value: idValue, onChangeText: idOnchangeText } = useInput("");
-  const { value: pwValue, onChangeText: pwOnChangeText } = useInput("");
-  const { value: okValue, onChangeText: okOnChangeText } = useInput("");
+  const { value, onChangeText } = useInput({
+    id: "",
+    pw: "",
+    ok: "",
+  });
 
   return (
     <Container>
@@ -22,21 +24,21 @@ function Signup_3({ navigation }) {
       <Title>아이디/비밀번호 설정</Title>
       <Sub>안전한 계정을 만들기위한 설정이에요</Sub>
       <TextField_
-        value={idValue}
-        onChangeText={idOnchangeText}
+        value={value.id}
+        onChangeText={(text) => onChangeText("id", text)}
         placeholder="아이디"
         helpText="사용하실 아이디를 입력해주세요"
       />
       <TextField_
-        value={pwValue}
-        onChangeText={pwOnChangeText}
+        value={value.pw}
+        onChangeText={(text) => onChangeText("pw", text)}
         placeholder="비밀번호"
         helpText="8자 이상, 특수문자(@, $, !, %, *, #, ?, &)를 포함해야 합니다"
         passwordType
       />
       <TextField_
-        value={okValue}
-        onChangeText={okOnChangeText}
+        value={value.ok}
+        onChangeText={(text) => onChangeText("ok", text)}
         placeholder="비밀번호 확인"
         helpText="비밀번호를 한번 더 입력해주세요"
         passwordType
@@ -52,7 +54,7 @@ function Signup_3({ navigation }) {
             onPress={() => {
               navi.navigate("Signup_4");
             }}
-            disabled={!idValue || !pwValue || !okValue}
+            disabled={!value.id || !value.pw || !value.ok}
           >
             <Next>다음</Next>
           </Pressable>

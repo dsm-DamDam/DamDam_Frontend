@@ -1,14 +1,13 @@
-import { styled } from "styled-components/native";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { Image, Text, View } from "react-native";
-import { theme } from "../style/theme";
-import ProgressCircleComponent from "../components/home/chart/RadialBar";
+import { styled } from "styled-components/native";
 import ConnectionStatusIndicator from "../components/home/ConnectionStatusIndicator";
 import NumberOfTime from "../components/home/NumberOfTime";
-import ToDayTips from "../components/home/Tip";
 import Promotion from "../components/home/Promotion";
-import TextField from "../components/common/TextField";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import ToDayTips from "../components/home/Tip";
+import ProgressCircleComponent from "../components/home/chart/RadialBar";
+import { theme } from "../style/theme";
 
 function Home() {
   const [total_count, setTotal_count] = useState("");

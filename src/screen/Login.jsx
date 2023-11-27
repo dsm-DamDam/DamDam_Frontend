@@ -1,27 +1,33 @@
-import { StatusBar } from "expo-status-bar";
-import { Text, View, Pressable, Alert, Image } from "react-native";
-import { useState } from "react";
-import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/core";
-import { theme } from "../style/theme";
+import axios from "axios";
+import { StatusBar } from "expo-status-bar";
+import { useEffect, useState } from "react";
+import { Image, Pressable, Text, View } from "react-native";
+import styled from "styled-components/native";
 import TextField from "../components/common/TextField";
 import { useInput } from "../hooks/useInput";
-import axios from "axios";
+import { theme } from "../style/theme";
 
-function Login({ navigation }) {
+function Login() {
   const navi = useNavigation();
   const [isSelected, setSelection] = useState(false);
-  const { value: idValue, onChangeText: idOnchangeText } = useInput("");
-  const { value: pwValue, onChangeText: pwOnChangeText } = useInput("");
+  const { value: inputValue, onChangeText: setInputValue } = useInput({
+    id: "",
+    pw: "",
+  });
 
   //userID - dsm0000
   //PW - dsm2310!
 
+  useEffect(() => {
+    console.log(inputValue);
+  }, [inputValue]);
+
   const Login = async () => {
     await axios
       .post(`${process.env.REACT_APP_BASE_URL}/user/login`, {
-        userID: idValue,
-        password: pwValue,
+        userID: inputValue.id,
+        password: inputValue.pw,
       })
       .then((res) => {
         return JSON(res);
@@ -37,17 +43,20 @@ function Login({ navigation }) {
     <Container>
       <Logo source={require("../assets/images/LoginLogo.png")} />
       <TextField_
-        value={idValue}
-        onChangeText={idOnchangeText}
+        value={inputValue.id}
+        onChangeText={(text) => {
+          setInputValue("id", text);
+        }}
         placeholder="아이디"
       />
       <TextField_
-        value={pwValue}
-        onChangeText={pwOnChangeText}
+        value={inputValue.pw}
+        onChangeText={(text) => {
+          setInputValue("pw", text);
+        }}
         placeholder="비밀번호"
         passwordType
       />
-
       <CheckboxContainer>
         <Pressable
           onPress={() => {
@@ -58,8 +67,7 @@ function Login({ navigation }) {
         </Pressable>
         <AutoText>자동 로그인</AutoText>
       </CheckboxContainer>
-
-      <Pressable onPress={Login} disabled={!idValue || !pwValue}>
+      <Pressable onPress={Login} disabled={!inputValue.id || !inputValue.pw}>
         <LoginButton>로그인</LoginButton>
       </Pressable>
       <SUBox>
