@@ -19,10 +19,6 @@ function Login() {
   //userID - dsm0000
   //PW - dsm2310!
 
-  useEffect(() => {
-    console.log(inputValue);
-  }, [inputValue]);
-
   const Login = async () => {
     await axios
       .post(`${process.env.REACT_APP_BASE_URL}/user/login`, {
@@ -34,8 +30,8 @@ function Login() {
       })
       .then((res) => {
         console.log(res);
-        localStorage.setItem("accessToken", res.accessToken);
-        navi.navigate("TabRouter");
+        // localStorage.setItem("accessToken", res.accessToken);
+        // navi.navigate("TabRouter");
       });
   };
 

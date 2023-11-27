@@ -27,12 +27,7 @@ function Signup_2() {
         onChangeText={(text) => onChangeText("email", text)}
         placeholder="이메일"
       >
-        <Pressable
-          onPress={() => {
-            console.log("눌림");
-          }}
-          disabled={!value.email}
-        >
+        <Pressable disabled={!value.email}>
           <Send>
             <SendT>발송</SendT>
           </Send>

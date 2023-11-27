@@ -19,7 +19,6 @@ function Home() {
       url: `${process.env.REACT_APP_BASE_URL}/item/daily-total-cnt`,
     })
       .then((res) => {
-        console.log(res.data);
         setTotal_count(res.data.total_count);
       })
       .catch((err) => {

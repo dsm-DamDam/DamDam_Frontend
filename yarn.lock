@@ -5806,7 +5806,7 @@ __metadata:
     axios: ^1.5.0
     expo: ~48.0.15
     expo-cli: ^6.3.10
-    expo-font: ~11.1.1
+    expo-font: ^11.6.0
     expo-status-bar: ~1.4.4
     global: ^4.4.0
     react: 18.2.0
@@ -6705,6 +6705,17 @@ __metadata:
   peerDependencies:
     expo: "*"
   checksum: a485e1c9978f2c301213a7f6b9c1654f7cf25004a46a658fe3046a33c855cb5114523c57ca12820efd699740563dc21457f982515385e737b8fb2bf08af700c1
+  languageName: node
+  linkType: hard
+
+"expo-font@npm:^11.6.0":
+  version: 11.9.0
+  resolution: "expo-font@npm:11.9.0"
+  dependencies:
+    fontfaceobserver: ^2.1.0
+  peerDependencies:
+    expo: "*"
+  checksum: 64349cbf52aed706dd7fcaff744c9c86a6e60b367a6cfa7d5e5de7fc351d5bb4eaf273806d73b6f73d27a33cacd3f0a0efb73230ae90343371d2e7fd7b781956
   languageName: node
   linkType: hard
 
