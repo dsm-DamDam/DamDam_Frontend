@@ -1,94 +1,156 @@
-import { Text, View, TouchableOpacity, TextInput, Alert } from "react-native";
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  TextInput,
+  Alert,
+  KeyboardAvoidingView,
+} from "react-native";
 import styled from "styled-components/native";
 import { theme } from "../../style/theme";
 import TextField from "../../components/common/TextField";
 import { useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
+import axios from "axios";
+import { BASE_URL } from "@env";
+import { Platform } from "react-native";
+import { useEffect, useCallback } from "react";
+import { GetUserApi } from "../../api/getUser";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function Profile() {
+  const navigation = useNavigation();
+  const [baseState, setBaseState] = useState({
+    nickname: "",
+    userID: "",
+    email: "",
+    password: "",
+  });
+
   const [inputState, setInputState] = useState({
     nickname: "",
-    id: "",
+    userID: "",
     email: "",
+    password: "",
   });
+
+  const [disable, setDisable] = useState(false);
+
+  const SaveDataApi = async () => {
+    const token = await AsyncStorage.getItem("access_token");
+    axios
+      .patch(
+        `${BASE_URL}/user/updateInfo`,
+        {
+          new_nickname: inputState.nickname,
+          new_userID: inputState.userID,
+          // password: inputState.password,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.error(err));
+
+    setDisable(false);
+  };
 
   const onChange = (text) => (value) => {
     setInputState((prevstate) => ({ ...prevstate, [text]: value }));
-    // console.log(inputState);
   };
 
-  // const MyComponent = () => {
-  //   const [isVisible, setIsVisible] = useState(false);
-  // };
-  const navigatioin = useNavigation();
-  return (
-    <InfoContainer>
-      {false && (
-        <ActoContainer>
-          <ActionToast>변경사항을 저장할까요?</ActionToast>
-          <ActoBtnContainer>
-            <ActoBtnCancel>
-              <ActoTextCancel>취소</ActoTextCancel>
-            </ActoBtnCancel>
-            <ActoBtnSave>
-              <ActoTextSave>저장</ActoTextSave>
-            </ActoBtnSave>
-          </ActoBtnContainer>
-        </ActoContainer>
-      )}
+  useFocusEffect(
+    useCallback(() => {
+      GetUserApi().then((e) => {
+        setInputState(e);
+        setBaseState(e);
+      });
+    }, [])
+  );
 
-      <InfoTitle>
-        <MainName>회원정보</MainName>
-      </InfoTitle>
-      <InfoPhoto />
-      <InfoNameBox>
-        <TitleName>닉네임</TitleName>
-        <TextField
-          value={inputState.nickname}
-          onChangeText={onChange("nickname")}
-        ></TextField>
-      </InfoNameBox>
-      <InfoNameBox>
-        <TitleName>아이디</TitleName>
-        <TextField
-          value={inputState.id}
-          onChangeText={onChange("id")}
-        ></TextField>
-      </InfoNameBox>
-      <InfoNameBox>
-        <TitleName>이메일</TitleName>
-        <TextField
-          value={inputState.email}
-          onChangeText={onChange("email")}
-          disable={true}
-        ></TextField>
-      </InfoNameBox>
-      <InfoNameBox>
-        <TitleName>비밀번호</TitleName>
-        {/* <InfoPassBox></InfoPassBox> */}
-        <TextField disable={true}>
-          <PassChangeBox
-            onPress={() => {
-              navigatioin.navigate("PassChangePage");
-            }}
+  useEffect(() => {
+    if (
+      inputState.nickname !== baseState.nickname ||
+      inputState.userID !== baseState.userID
+    ) {
+      setDisable(true);
+    } else {
+      setDisable(false);
+    }
+  }, [inputState, baseState]);
+
+  return (
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+    >
+      <InfoContainer>
+        {!!disable && (
+          <ActoContainer>
+            <ActionToast>변경사항을 저장할까요?</ActionToast>
+            <ActoBtnContainer>
+              <ActoBtnCancel onPress={() => setInputState(baseState)}>
+                <ActoTextCancel>취소</ActoTextCancel>
+              </ActoBtnCancel>
+              <ActoBtnSave onPress={() => SaveDataApi()}>
+                <ActoTextSave>저장</ActoTextSave>
+              </ActoBtnSave>
+            </ActoBtnContainer>
+          </ActoContainer>
+        )}
+
+        <InfoTitle>
+          <MainName>회원정보</MainName>
+        </InfoTitle>
+        <InfoPhoto />
+        <InfoNameBox>
+          <TitleName>닉네임</TitleName>
+          <TextField
+            value={inputState ? inputState.nickname : ""}
+            onChangeText={onChange("nickname")}
+          ></TextField>
+        </InfoNameBox>
+        <InfoNameBox>
+          <TitleName>아이디</TitleName>
+          <TextField
+            value={inputState ? inputState.userID : ""}
+            onChangeText={onChange("userID")}
+          ></TextField>
+        </InfoNameBox>
+        <InfoNameBox>
+          <TitleName>이메일</TitleName>
+          <TextField
+            value={inputState ? inputState.email : ""}
+            onChangeText={onChange("email")}
+            disable={true}
+          ></TextField>
+        </InfoNameBox>
+        <InfoNameBox>
+          <TitleName>비밀번호</TitleName>
+          <TextField
+            disable={true}
+            value={"*".repeat(
+              inputState && inputState.password ? inputState.password.length : 0
+            )}
           >
-            <PassChangeText>수정</PassChangeText>
-          </PassChangeBox>
-        </TextField>
-      </InfoNameBox>
-    </InfoContainer>
+            <PassChangeBox
+              onPress={() => {
+                navigation.navigate("PassChangePage");
+              }}
+            >
+              <PassChangeText>수정</PassChangeText>
+            </PassChangeBox>
+          </TextField>
+        </InfoNameBox>
+      </InfoContainer>
+    </KeyboardAvoidingView>
   );
 }
-
-// const TextFieldChange = () =>
-//   Alert.alert("변경사항을 저장할까요?", [
-//     {
-//       text: "취소",
-//       onPress: () => console.log("취소한다"),
-//       style: "cancel",
-//     },
-//     { text: "저장", onPress: () => console.log("저장한다") },
-//   ]);
 
 const InfoContainer = styled(View)`
   flex: 1;
@@ -99,7 +161,7 @@ const InfoContainer = styled(View)`
 
 const ActoContainer = styled(View)`
   width: 340px;
-  height: 50px;
+  height: 60px;
   border-width: 1px;
   border-radius: 10px;
   align-items: center;
@@ -107,10 +169,17 @@ const ActoContainer = styled(View)`
   flex-direction: row;
   background-color: ${theme.color.white};
   border-color: ${theme.color.gray_300};
+  shadow-offset: 0px 10px;
+  shadow-opacity: 0.2;
+  shadow-radius: 4px;
+  elevation: 4;
+  position: absolute;
+  top: 30px;
+  z-index: 1000;
 `;
 
 const ActionToast = styled(Text)`
-  font-size: 12px;
+  font-size: 14px;
 `;
 
 const ActoBtnContainer = styled(View)`
@@ -175,15 +244,6 @@ const InfoNameBox = styled(View)`
 const TitleName = styled(Text)`
   font-size: 10px;
 `;
-
-// const InfoPassBox = styled(TouchableOpacity)`
-//   align-items: center;
-//   justify-content: space-between;
-//   height: auto;
-//   width: auto;
-//   background-color: ${theme.color.gray_300};
-//   flex-direction: row;
-// `;
 
 const PassChangeBox = styled(TouchableOpacity)`
   align-items: center;

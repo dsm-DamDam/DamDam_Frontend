@@ -19,7 +19,9 @@
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/images/LogoProfile.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "softwareKeyboardLayoutMode": "pan",
+      "package": "com.majaeyoung.DamDam_Frontend"
     },
     "web": {
       "favicon": "./src/assets/images/LogoProfile.png"

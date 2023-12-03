@@ -5,15 +5,24 @@ import _User_info from "../assets/icons/_user_info";
 import _Light_Mode from "../assets/icons/_light_mode";
 import _Support from "../assets/icons/_support";
 import _Logout from "../assets/icons/_logout";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import axios from "axios";
+import { BASE_URL } from "@env";
+import { useCallback, useState } from "react";
+import { GetUserApi } from "../api/getUser";
 
 function Profile() {
   const navigatioin = useNavigation();
 
+  const [userInfo, setUserInfo] = useState({
+    email: "",
+    nickname: "",
+    userID: "",
+    password: "",
+  });
   const Logout = async () => {
     await axios
-      .delete(`${process.env.REACT_APP_BASE_URL}/logout`, {
+      .delete(`${BASE_URL}/logout`, {
         headers: {
           accessToken: localStorage.getItem("accessToken"),
         },
@@ -24,13 +33,21 @@ function Profile() {
       });
   };
 
+  useFocusEffect(
+    useCallback(() => {
+      GetUserApi().then((e) => {
+        setUserInfo(e);
+      });
+    }, [])
+  );
+
   return (
     <Container>
       <Photo />
 
       <User_namebox>
-        <User_naming>마재영</User_naming>
-        <User_mail>@jeayaengma</User_mail>
+        <User_naming>{userInfo.nickname}</User_naming>
+        <User_mail>@{userInfo.email.split("@")[0]}</User_mail>
       </User_namebox>
 
       <User_PD>
