@@ -64,12 +64,12 @@ const BrandText = styled(Text)`
 `;
 const GoodsTitle = styled(Text)`
   font-size: 18px;
-  color: ${theme.color.balck};
+  color: ${theme.color.black};
   line-height: 24px;
 `;
 const Price = styled(Text)`
   font-size: 22px;
-  color: ${theme.color.balck};
+  color: ${theme.color.black};
   font-family: "Roboto-Bold";
 `;
 

@@ -24,9 +24,9 @@ const Container = styled(View)`
 const Title = styled(Text)`
   font-size: 16px;
   font-family: "NotoSansKR-Bold";
-  color: ${theme.color.balck};
+  color: ${theme.color.black};
 `;
 const Contants = styled(Text)`
   font-size: 14px;
-  color: ${theme.color.balck};
+  color: ${theme.color.black};
 `;

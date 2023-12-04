@@ -83,7 +83,7 @@ const BrandName = styled(Text)`
 const Title = styled(Text)`
   font-size: 18px;
   font-family: "NotoSansKR-Bold";
-  color: ${theme.color.balck};
+  color: ${theme.color.black};
 `;
 const BarCode = styled(View)``;
 

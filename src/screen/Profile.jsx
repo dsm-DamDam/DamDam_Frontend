@@ -159,7 +159,7 @@ const Point_text = styled(Text)`
 
 const Point_number = styled(Text)`
   font-size: 15px;
-  color: ${theme.color.balck};
+  color: ${theme.color.black};
 `;
 
 const Center_line = styled(View)`
@@ -182,7 +182,7 @@ const Effort_text = styled(Text)`
 
 const Effort_number = styled(Text)`
   font-size: 15px;
-  color: ${theme.color.balck};
+  color: ${theme.color.black};
 `;
 
 const Userbox_info = styled(TouchableOpacity)`

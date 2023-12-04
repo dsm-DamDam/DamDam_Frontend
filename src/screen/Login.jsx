@@ -140,7 +140,7 @@ const NotMember = styled(Text)`
 `;
 
 const SignUp = styled(Text)`
-  color: ${theme.color.balck};
+  color: ${theme.color.black};
 `;
 
 export default Login;

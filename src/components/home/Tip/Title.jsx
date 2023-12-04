@@ -20,7 +20,7 @@ const Wrapper = styled(View)`
 const DefText = styled(Text)`
   font-size: 16px;
   font-family: "NotoSansKR-Bold";
-  color: ${theme.color.balck};
+  color: ${theme.color.black};
 `;
 const MainText = styled(Text)`
   color: ${theme.color.green_700};
