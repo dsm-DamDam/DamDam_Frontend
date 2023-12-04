@@ -1,7 +1,6 @@
 import axios from "axios";
 import { styled } from "styled-components/native";
 import { Image, Text, View } from "react-native";
-import { styled } from "styled-components/native";
 import ConnectionStatusIndicator from "../components/home/ConnectionStatusIndicator";
 import NumberOfTime from "../components/home/NumberOfTime";
 import Promotion from "../components/home/Promotion";
@@ -11,6 +10,7 @@ import { GetUserApi } from "../api/getUser";
 import { BASE_URL } from "@env";
 import { useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { theme } from "../style/theme";
 
 function Home() {
   const [total_count, setTotal_count] = useState("");

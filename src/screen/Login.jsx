@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/core";
 import axios from "axios";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
@@ -7,7 +6,6 @@ import styled from "styled-components/native";
 import { theme } from "../style/theme";
 import TextField from "../components/common/TextField";
 import { useInput } from "../hooks/useInput";
-import axios from "axios";
 import { BASE_URL } from "@env";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
@@ -26,8 +24,8 @@ function Login() {
   const LoginApi = async () => {
     await axios
       .post(`${BASE_URL}/user/login`, {
-        userID: idValue,
-        password: pwValue,
+        userID: inputValue.id,
+        password: inputValue.pw,
       })
       .then(async (response) => {
         const token = response.data.access_token;
@@ -71,7 +69,7 @@ function Login() {
         <AutoText>자동 로그인</AutoText>
       </CheckboxContainer>
 
-      <Pressable onPress={LoginApi} disabled={!idValue || !pwValue}>
+      <Pressable onPress={LoginApi} disabled={!inputValue.id || !inputValue.pw}>
         <LoginButton>로그인</LoginButton>
       </Pressable>
       <SUBox>
