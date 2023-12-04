@@ -1,8 +1,8 @@
-import { Text, View, TouchableOpacity, TextInput, Alert } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { Text, TouchableOpacity, View } from "react-native";
 import styled from "styled-components/native";
-import { theme } from "../../style/theme";
+import _Left_Arrow from "../../assets/icons/_left_arrow";
 import TextField from "../../components/common/TextField";
-import { useState } from "react";
 import { useInput } from "../../hooks/useInput";
 import { useNavigation } from "@react-navigation/native";
 import _Left_Arrow from "../../assets/icons/_left_arrow";

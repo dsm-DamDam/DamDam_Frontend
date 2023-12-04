@@ -1,14 +1,16 @@
+import { useNavigation } from "@react-navigation/core";
+import { Image, Pressable, Text, View } from "react-native";
 import styled from "styled-components/native";
 import TextField from "../../components/common/TextField";
-import { Text, View, Pressable, Image } from "react-native";
-import { theme } from "../../style/theme";
-import { useNavigation } from "@react-navigation/core";
 import { useInput } from "../../hooks/useInput";
+import { theme } from "../../style/theme";
 
-function Signup_2({ navigation }) {
+function Signup_2() {
   const navi = useNavigation();
-  const { value: emailValue, onChangeText: emailOnChangeText } = useInput("");
-  const { value: numValue, onChangeText: numOnchangeText } = useInput("");
+  const { value, onChangeText } = useInput({
+    email: "",
+    num: "",
+  });
 
   return (
     <Container>
@@ -21,24 +23,19 @@ function Signup_2({ navigation }) {
       <Title>이메일 인증</Title>
       <Sub>계정 보호를 위해 이메일 인증이 필요해요</Sub>
       <TextField_
-        value={emailValue}
-        onChangeText={emailOnChangeText}
+        value={value.email}
+        onChangeText={(text) => onChangeText("email", text)}
         placeholder="이메일"
       >
-        <Pressable
-          onPress={() => {
-            console.log("눌림");
-          }}
-          disabled={!emailValue}
-        >
+        <Pressable disabled={!value.email}>
           <Send>
             <SendT>발송</SendT>
           </Send>
         </Pressable>
       </TextField_>
       <TextField_
-        value={numValue}
-        onChangeText={numOnchangeText}
+        value={value.num}
+        onChangeText={(text) => onChangeText("num", text)}
         placeholder="인증번호"
       />
       <MoveBox>
@@ -52,7 +49,7 @@ function Signup_2({ navigation }) {
             onPress={() => {
               navi.navigate("Signup_3");
             }}
-            disabled={!emailValue || !numValue}
+            disabled={!value.email || !value.num}
           >
             <Next>다음</Next>
           </Pressable>

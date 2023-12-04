@@ -1,6 +1,8 @@
+import { useNavigation } from "@react-navigation/core";
+import axios from "axios";
 import { StatusBar } from "expo-status-bar";
-import { Text, View, Pressable, Alert, Image } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Image, Pressable, Text, View } from "react-native";
 import styled from "styled-components/native";
 import { theme } from "../style/theme";
 import TextField from "../components/common/TextField";
@@ -10,11 +12,13 @@ import { BASE_URL } from "@env";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 
-function Login({ navigation }) {
+function Login() {
   const navi = useNavigation();
   const [isSelected, setSelection] = useState(false);
-  const { value: idValue, onChangeText: idOnchangeText } = useInput("");
-  const { value: pwValue, onChangeText: pwOnChangeText } = useInput("");
+  const { value: inputValue, onChangeText: setInputValue } = useInput({
+    id: "",
+    pw: "",
+  });
 
   //userID - dsm0000
   //PW - dsm2310!
@@ -42,17 +46,20 @@ function Login({ navigation }) {
     <Container>
       <Logo source={require("../assets/images/LoginLogo.png")} />
       <TextField_
-        value={idValue}
-        onChangeText={idOnchangeText}
+        value={inputValue.id}
+        onChangeText={(text) => {
+          setInputValue("id", text);
+        }}
         placeholder="아이디"
       />
       <TextField_
-        value={pwValue}
-        onChangeText={pwOnChangeText}
+        value={inputValue.pw}
+        onChangeText={(text) => {
+          setInputValue("pw", text);
+        }}
         placeholder="비밀번호"
         passwordType
       />
-
       <CheckboxContainer>
         <Pressable
           onPress={() => {

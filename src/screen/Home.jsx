@@ -1,11 +1,9 @@
 import axios from "axios";
 import { styled } from "styled-components/native";
 import { Image, Text, View } from "react-native";
-import { theme } from "../style/theme";
-import ProgressCircleComponent from "../components/home/chart/RadialBar";
+import { styled } from "styled-components/native";
 import ConnectionStatusIndicator from "../components/home/ConnectionStatusIndicator";
 import NumberOfTime from "../components/home/NumberOfTime";
-import ToDayTips from "../components/home/Tip";
 import Promotion from "../components/home/Promotion";
 import TextField from "../components/common/TextField";
 import { useState, useCallback } from "react";
@@ -30,7 +28,6 @@ function Home() {
       url: `${BASE_URL}/item/daily-total-cnt`,
     })
       .then((res) => {
-        // console.log(res.data);
         setTotal_count(res.data.total_count);
       })
       .catch((err) => {

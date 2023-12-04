@@ -1,13 +1,13 @@
+import { useNavigation } from "@react-navigation/core";
+import { Image, Pressable, Text, View } from "react-native";
 import styled from "styled-components/native";
 import TextField from "../../components/common/TextField";
-import { Text, View, Pressable, Image } from "react-native";
-import { theme } from "../../style/theme";
-import { useNavigation } from "@react-navigation/core";
 import { useInput } from "../../hooks/useInput";
+import { theme } from "../../style/theme";
 
-function Signup_4({ navigation }) {
+function Signup_4() {
   const navi = useNavigation();
-  const { value, onChangeText } = useInput("");
+  const { value, onChangeText } = useInput({ nickname: "" });
 
   return (
     <Container>
@@ -20,8 +20,8 @@ function Signup_4({ navigation }) {
       <Title>닉네임 설정</Title>
       <Sub>담담에서 사용하실 닉네임을 정해주세요</Sub>
       <TextField_
-        value={value}
-        onChangeText={onChangeText}
+        value={value.nickname}
+        onChangeText={(text) => onChangeText("nickname", text)}
         placeholder="닉네임"
       />
       <MoveBox>
@@ -35,7 +35,7 @@ function Signup_4({ navigation }) {
             onPress={() => {
               navi.navigate("Signup_finish");
             }}
-            disabled={!value}
+            disabled={!value.nickname}
           >
             <Next>다음</Next>
           </Pressable>
