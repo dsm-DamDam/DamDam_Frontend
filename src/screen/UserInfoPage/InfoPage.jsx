@@ -1,22 +1,19 @@
+import { BASE_URL } from "@env";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import axios from "axios";
+import { useCallback, useEffect, useState } from "react";
 import {
-  Text,
-  View,
-  TouchableOpacity,
-  TextInput,
-  Alert,
   KeyboardAvoidingView,
+  Platform,
+  Text,
+  TouchableOpacity,
+  View
 } from "react-native";
 import styled from "styled-components/native";
-import { theme } from "../../style/theme";
-import TextField from "../../components/common/TextField";
-import { useState } from "react";
-import { useNavigation, useFocusEffect } from "@react-navigation/native";
-import axios from "axios";
-import { BASE_URL } from "@env";
-import { Platform } from "react-native";
-import { useEffect, useCallback } from "react";
 import { GetUserApi } from "../../api/getUser";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import TextField from "../../components/common/TextField";
+import { theme } from "../../style/theme";
 
 function Profile() {
   const navigation = useNavigation();
