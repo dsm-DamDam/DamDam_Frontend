@@ -1,15 +1,13 @@
+import { BASE_URL } from "@env";
+import { useFocusEffect } from "@react-navigation/native";
 import axios from "axios";
-import { styled } from "styled-components/native";
+import { useCallback, useState } from "react";
 import { Image, Text, View } from "react-native";
+import { styled } from "styled-components/native";
+import { GetUserApi } from "../api/getUser";
 import ConnectionStatusIndicator from "../components/home/ConnectionStatusIndicator";
 import NumberOfTime from "../components/home/NumberOfTime";
 import Promotion from "../components/home/Promotion";
-import TextField from "../components/common/TextField";
-import { useState, useCallback } from "react";
-import { GetUserApi } from "../api/getUser";
-import { BASE_URL } from "@env";
-import { useFocusEffect } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { theme } from "../style/theme";
 
 function Home() {

@@ -5,9 +5,12 @@ import "react-native-gesture-handler";
 import { setCustomText } from "react-native-global-props";
 import LoginRouter from "./src/Router/LoginRouter";
 import { TapContext } from "./src/useContext/Context";
+import { Text } from "react-native";
 
 export default function App() {
-  // const [fontsLoaded] = useFonts({
+  const [isReady, setIsReady] = useState(false);
+
+  // const [fontsLoaded, error] = Font.useFonts({
   //   "Roboto-Black": require("./src/assets/fonts/Roboto/Roboto-Black.ttf"),
   //   "Roboto-Bold": require("./src/assets/fonts/Roboto/Roboto-Bold.ttf"),
   //   "Roboto-Medium": require("./src/assets/fonts/Roboto/Roboto-Medium.ttf"),
@@ -20,7 +23,7 @@ export default function App() {
   //   "NotoSansKR-Light": require("./src/assets/fonts/NotoSansKR/NotoSansKR-Light.otf"),
   // });
 
-  useEffect(async () => {
+  const loadFonts = async () => {
     await Font.loadAsync({
       "Roboto-Black": require("./src/assets/fonts/Roboto/Roboto-Black.ttf"),
       "Roboto-Bold": require("./src/assets/fonts/Roboto/Roboto-Bold.ttf"),
@@ -33,20 +36,34 @@ export default function App() {
       "NotoSansKR-Regular": require("./src/assets/fonts/NotoSansKR/NotoSansKR-Regular.otf"),
       "NotoSansKR-Light": require("./src/assets/fonts/NotoSansKR/NotoSansKR-Light.otf"),
     });
+    setIsReady(true);
+  };
+
+  useEffect(() => {
+    loadFonts();
   }, []);
 
-  const customTextProps = {
-    style: {
-      fontFamily: "NotoSansKR-Medium",
-    },
-  };
-  setCustomText(customTextProps);
+  useEffect(() => {
+    if (isReady) {
+      const customTextProps = {
+        style: {
+          fontFamily: "NotoSansKR-Medium",
+        },
+      };
+      setCustomText(customTextProps);
+    }
+  }, [isReady]);
 
   const [moveTapState, setMoveTapState] = useState("Home");
 
-  // if (!fontsLoaded) {
-  //   return <StatusBar />;
-  // }
+  if (!isReady) {
+    return (
+      <>
+        <StatusBar style="auto" />
+        <Text>로딩중</Text>
+      </>
+    );
+  }
   return (
     <TapContext.Provider value={{ moveTapState, setMoveTapState }}>
       <LoginRouter />
