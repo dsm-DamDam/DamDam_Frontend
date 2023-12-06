@@ -1,22 +1,29 @@
+import { BASE_URL } from "@env";
+import { useFocusEffect } from "@react-navigation/native";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { Image, Text, View } from "react-native";
 import { styled } from "styled-components/native";
+import { GetUserApi } from "../api/getUser";
 import ConnectionStatusIndicator from "../components/home/ConnectionStatusIndicator";
 import NumberOfTime from "../components/home/NumberOfTime";
 import Promotion from "../components/home/Promotion";
-import ToDayTips from "../components/home/Tip";
-import ProgressCircleComponent from "../components/home/chart/RadialBar";
 import { theme } from "../style/theme";
 
 function Home() {
   const [total_count, setTotal_count] = useState("");
   const [today, setToday] = useState("");
+  const [userInfo, setUserInfo] = useState({
+    email: "",
+    nickname: "",
+    userID: "",
+    password: "",
+  });
 
   const GetData = () => {
     axios({
       method: "GET",
-      url: `${process.env.REACT_APP_BASE_URL}/item/daily-total-cnt`,
+      url: `${BASE_URL}/item/daily-total-cnt`,
     })
       .then((res) => {
         setTotal_count(res.data.total_count);
@@ -26,9 +33,13 @@ function Home() {
       });
   };
 
-  useEffect(() => {
-    GetData();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      GetUserApi().then((e) => {
+        setUserInfo(e);
+      });
+    }, [])
+  );
 
   return (
     <Container>
@@ -42,7 +53,7 @@ function Home() {
             />
           </ProfileImgWrapper>
           <UserName>
-            <Text>마재영님,</Text> 안녕하세요
+            <Text>{userInfo.nickname}</Text> 안녕하세요
           </UserName>
         </Profile>
         <PointText>400P</PointText>

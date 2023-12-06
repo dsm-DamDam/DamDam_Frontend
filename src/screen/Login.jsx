@@ -1,12 +1,14 @@
-import { useNavigation } from "@react-navigation/core";
 import axios from "axios";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import { Image, Pressable, Text, View } from "react-native";
 import styled from "styled-components/native";
+import { theme } from "../style/theme";
 import TextField from "../components/common/TextField";
 import { useInput } from "../hooks/useInput";
-import { theme } from "../style/theme";
+import { BASE_URL } from "@env";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
 
 function Login() {
   const navi = useNavigation();
@@ -19,19 +21,22 @@ function Login() {
   //userID - dsm0000
   //PW - dsm2310!
 
-  const Login = async () => {
+  const LoginApi = async () => {
     await axios
-      .post(`${process.env.REACT_APP_BASE_URL}/user/login`, {
+      .post(`${BASE_URL}/user/login`, {
         userID: inputValue.id,
         password: inputValue.pw,
       })
-      .then((res) => {
-        return JSON(res);
+      .then(async (response) => {
+        const token = response.data.access_token;
+        if (token) {
+          console.log("토큰 = " + token);
+          await AsyncStorage.setItem("access_token", token);
+          navi.navigate("TabRouter");
+        }
       })
-      .then((res) => {
-        console.log(res);
-        // localStorage.setItem("accessToken", res.accessToken);
-        // navi.navigate("TabRouter");
+      .catch((error) => {
+        console.error(error);
       });
   };
 
@@ -63,7 +68,8 @@ function Login() {
         </Pressable>
         <AutoText>자동 로그인</AutoText>
       </CheckboxContainer>
-      <Pressable onPress={Login} disabled={!inputValue.id || !inputValue.pw}>
+
+      <Pressable onPress={LoginApi} disabled={!inputValue.id || !inputValue.pw}>
         <LoginButton>로그인</LoginButton>
       </Pressable>
       <SUBox>
@@ -134,7 +140,7 @@ const NotMember = styled(Text)`
 `;
 
 const SignUp = styled(Text)`
-  color: ${theme.color.balck};
+  color: ${theme.color.black};
 `;
 
 export default Login;

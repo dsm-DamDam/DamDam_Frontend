@@ -117,7 +117,7 @@ const TextInput_ = styled(TextInput)`
   height: 60px;
   font-family: "NotoSansKR-Regular";
   font-size: 16px;
-  color: ${theme.color.balck};
+  color: ${theme.color.black};
 `;
 
 export default TextField;

@@ -1,19 +1,36 @@
+import { BASE_URL } from "@env";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 import { Text, TouchableOpacity, View } from "react-native";
 import styled from "styled-components/native";
 import _Left_Arrow from "../../assets/icons/_left_arrow";
 import TextField from "../../components/common/TextField";
-import { useInput } from "../../hooks/useInput";
 import { theme } from "../../style/theme";
 
 function PassChangePage() {
-  const { value, onChangeText } = useInput({
-    previous: "",
-    newPass: "",
-    checkPass: "",
+  const navigatioin = useNavigation();
+  const [inputState, setInputState] = useState({
+    password: "",
+    change_password: "",
+    confirm_change_password: "",
   });
 
-  const navigatioin = useNavigation();
+  const SavePassApi = async () => {
+    const token = await AsyncStorage.getItem("access_token");
+    axios
+      .patch(`${BASE_URL}/user/updatePW`, inputState, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .catch((err) => console.error(err));
+  };
+
+  const onChange = (text) => (value) => {
+    setInputState((prevstate) => ({ ...prevstate, [text]: value }));
+  };
+
   return (
     <PassContainer>
       <PassTitle
@@ -36,22 +53,22 @@ function PassChangePage() {
 
         <TextFieldContainer>
           <TextField
-            value={value.previous}
-            onChangeText={(text) => onChangeText("previous", text)}
+            value={inputState.password}
+            onChangeText={onChange("password")}
             helpText="도움말"
             placeholder="기존비밀번호"
             passwordType={true}
           ></TextField>
           <TextField
-            value={value.newPass}
-            onChangeText={(text) => onChangeText("newPass", text)}
+            value={inputState.change_password}
+            onChangeText={onChange("change_password")}
             helpText="도움말"
             placeholder="변경할 비밀번호"
             passwordType={true}
           ></TextField>
           <TextField
-            value={value.checkPass}
-            onChangeText={(text) => onChangeText("checkPass", text)}
+            value={inputState.confirm_change_password}
+            onChangeText={onChange("confirm_change_password")}
             helpText="도움말"
             placeholder="비밀번호 확인"
             passwordType={true}
@@ -61,6 +78,7 @@ function PassChangePage() {
         <CompletionContainer>
           <CompletionBox
             onPress={() => {
+              SavePassApi();
               navigatioin.navigate("ProfilePage");
             }}
           >

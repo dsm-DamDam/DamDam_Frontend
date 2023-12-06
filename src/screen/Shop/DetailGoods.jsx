@@ -65,7 +65,7 @@ const BrandName = styled(Text)`
 const Price = styled(Text)`
   font-size: 24px;
   font-family: "NotoSansKR-Black";
-  color: ${theme.color.balck};
+  color: ${theme.color.black};
 `;
 
 const Hr = styled(View)`

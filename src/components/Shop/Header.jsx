@@ -87,7 +87,7 @@ const MenuBtn = styled(TouchableOpacity)`
     `}
 `;
 const BtnText = styled(Text)`
-  color: ${theme.color.balck};
+  color: ${theme.color.black};
   font-size: 16px;
   ${(props) =>
     props.route &&

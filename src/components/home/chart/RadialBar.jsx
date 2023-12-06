@@ -36,7 +36,7 @@ const ProgressWrapper = styled(View)`
   padding-bottom: 8px;
 `;
 const CurrentValueText = styled(Text)`
-  color: ${theme.color.balck};
+  color: ${theme.color.black};
   font-family: "Roboto-Bold";
   font-size: 45px;
   margin-left: 5%;
@@ -47,7 +47,7 @@ const MaxValueText = styled(Text)`
   font-size: 20px;
 `;
 const Coments = styled(Text)`
-  color: ${theme.color.balck};
+  color: ${theme.color.black};
   font-size: 15px;
   line-height: 18px;
 `;
