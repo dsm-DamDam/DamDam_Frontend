@@ -22,6 +22,7 @@ function Login() {
   //PW - dsm2310!
 
   const LoginApi = async () => {
+    navi.navigate("TabRouter");
     await axios
       .post(`${BASE_URL}/user/login`, {
         userID: inputValue.id,

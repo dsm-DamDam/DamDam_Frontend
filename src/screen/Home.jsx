@@ -9,6 +9,8 @@ import ConnectionStatusIndicator from "../components/home/ConnectionStatusIndica
 import NumberOfTime from "../components/home/NumberOfTime";
 import Promotion from "../components/home/Promotion";
 import { theme } from "../style/theme";
+import ProgressCircleComponent from "../components/chart/ProgressCircleComponent";
+import ToDayTips from "../components/home/Tip/index";
 
 function Home() {
   const [total_count, setTotal_count] = useState("");

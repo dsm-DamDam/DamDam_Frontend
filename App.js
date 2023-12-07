@@ -10,19 +10,6 @@ import { Text } from "react-native";
 export default function App() {
   const [isReady, setIsReady] = useState(false);
 
-  // const [fontsLoaded, error] = Font.useFonts({
-  //   "Roboto-Black": require("./src/assets/fonts/Roboto/Roboto-Black.ttf"),
-  //   "Roboto-Bold": require("./src/assets/fonts/Roboto/Roboto-Bold.ttf"),
-  //   "Roboto-Medium": require("./src/assets/fonts/Roboto/Roboto-Medium.ttf"),
-  //   "Roboto-Regular": require("./src/assets/fonts/Roboto/Roboto-Regular.ttf"),
-  //   "Roboto-Light": require("./src/assets/fonts/Roboto/Roboto-Light.ttf"),
-  //   "NotoSansKR-Black": require("./src/assets/fonts/NotoSansKR/NotoSansKR-Black.otf"),
-  //   "NotoSansKR-Bold": require("./src/assets/fonts/NotoSansKR/NotoSansKR-Bold.otf"),
-  //   "NotoSansKR-Medium": require("./src/assets/fonts/NotoSansKR/NotoSansKR-Medium.otf"),
-  //   "NotoSansKR-Regular": require("./src/assets/fonts/NotoSansKR/NotoSansKR-Regular.otf"),
-  //   "NotoSansKR-Light": require("./src/assets/fonts/NotoSansKR/NotoSansKR-Light.otf"),
-  // });
-
   const loadFonts = async () => {
     await Font.loadAsync({
       "Roboto-Black": require("./src/assets/fonts/Roboto/Roboto-Black.ttf"),
