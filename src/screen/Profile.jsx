@@ -8,20 +8,16 @@ import _Logout from "../assets/icons/_logout";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import axios from "axios";
 import { BASE_URL } from "@env";
-import { useCallback, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { GetUserApi } from "../api/getUser";
 import { Image } from "react-native";
 import * as Linking from "expo-linking";
+import { UserContext } from "../useContext/Context";
 
 function Profile() {
   const navigatioin = useNavigation();
 
-  const [userInfo, setUserInfo] = useState({
-    email: "aodtn323@dms.hs.kr",
-    nickname: "테스트",
-    userID: "test",
-    password: "qwertyuiop!!",
-  });
+  const { userInfo } = useContext(UserContext);
 
   // useFocusEffect(
   //   useCallback(() => {
@@ -41,7 +37,7 @@ function Profile() {
 
       <User_namebox>
         <User_naming>{userInfo.nickname}</User_naming>
-        <User_mail>@{userInfo.userID.split("@")[0]}</User_mail>
+        <User_mail>@{userInfo.userId.split("@")[0]}</User_mail>
       </User_namebox>
       {/* 
       <User_PD>

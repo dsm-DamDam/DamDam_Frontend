@@ -2,7 +2,7 @@ import { BASE_URL } from "@env";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import axios from "axios";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -15,22 +15,16 @@ import styled from "styled-components/native";
 import { GetUserApi } from "../../api/getUser";
 import TextField from "../../components/common/TextField";
 import { theme } from "../../style/theme";
+import { UserContext } from "../../useContext/Context";
+import { Image } from "react-native";
 
 function Profile() {
+  const { userInfo, setUserInfo } = useContext(UserContext);
+  console.log(userInfo);
   const navigation = useNavigation();
-  const [baseState, setBaseState] = useState({
-    nickname: "테스트",
-    userID: "test",
-    email: "aodtn323@dsm.hs.kr",
-    password: "qwertyuiop!!",
-  });
+  const [baseState, setBaseState] = useState(userInfo);
 
-  const [inputState, setInputState] = useState({
-    nickname: "테스트",
-    userID: "test",
-    email: "aodtn323@dsm.hs.kr",
-    password: "qwertyuiop!!",
-  });
+  const [inputState, setInputState] = useState(userInfo);
 
   const [disable, setDisable] = useState(false);
 
@@ -59,11 +53,17 @@ function Profile() {
   // };
 
   const SaveDataApi = () => {
+    console.log("inputState" + inputState.nickname, inputState.userId);
+    setUserInfo((prev) => ({
+      ...prev,
+      nickname: inputState.nickname,
+      userId: inputState.userId,
+    }));
     navigation.navigate("ProfilePage");
     Alert.alert("수정완료", "유저정보가 성공적으로 변경되었습니다.");
   };
 
-  const onChange = (text) => (value) => {
+  const onChange = (text, value) => {
     setInputState((prevstate) => ({ ...prevstate, [text]: value }));
   };
 
@@ -79,7 +79,7 @@ function Profile() {
   useEffect(() => {
     if (
       inputState.nickname !== baseState.nickname ||
-      inputState.userID !== baseState.userID
+      inputState.userId !== baseState.userId
     ) {
       setDisable(true);
     } else {
@@ -111,26 +111,33 @@ function Profile() {
           <InfoTitle>
             <MainName>회원정보</MainName>
           </InfoTitle>
-          <InfoPhoto />
+          <InfoPhoto
+            source={{
+              uri: "https://play-lh.googleusercontent.com/38AGKCqmbjZ9OuWx4YjssAz3Y0DTWbiM5HB0ove1pNBq_o9mtWfGszjZNxZdwt_vgHo=w240-h480-rw",
+            }}
+          />
           <InfoNameBox>
             <TitleName>닉네임</TitleName>
             <TextField
               value={inputState ? inputState.nickname : ""}
-              onChangeText={onChange("nickname")}
+              onChangeText={(value) => {
+                onChange("nickname", value);
+              }}
             ></TextField>
           </InfoNameBox>
           <InfoNameBox>
             <TitleName>아이디</TitleName>
             <TextField
-              value={inputState ? inputState.userID : ""}
-              onChangeText={onChange("userID")}
+              value={inputState ? inputState.userId : ""}
+              onChangeText={(value) => {
+                onChange("userId", value);
+              }}
             ></TextField>
           </InfoNameBox>
           <InfoNameBox>
             <TitleName>이메일</TitleName>
             <TextField
               value={inputState ? inputState.email : ""}
-              onChangeText={onChange("email")}
               disable={true}
             ></TextField>
           </InfoNameBox>
@@ -239,12 +246,14 @@ const MainName = styled(Text)`
   color: ${theme.color.gray_700};
 `;
 
-const InfoPhoto = styled(TouchableOpacity)`
+const InfoPhoto = styled(Image)`
   width: 100px;
   height: 100px;
   border-radius: 50px;
   margin-bottom: 10%;
   background-color: ${theme.color.gray_400};
+  border-color: #e5e5e5;
+  border-width: 1px;
 `;
 
 const InfoNameBox = styled(View)`

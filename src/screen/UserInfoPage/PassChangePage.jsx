@@ -7,7 +7,8 @@ import styled from "styled-components/native";
 import _Left_Arrow from "../../assets/icons/_left_arrow";
 import TextField from "../../components/common/TextField";
 import { theme } from "../../style/theme";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { UserContext } from "../../useContext/Context";
 
 function PassChangePage() {
   const navigatioin = useNavigation();
@@ -16,6 +17,8 @@ function PassChangePage() {
     change_password: "",
     confirm_change_password: "",
   });
+  const { userInfo, setUserInfo } = useContext(UserContext);
+  console.log(userInfo);
 
   // const SavePassApi = async () => {
   //   const token = await AsyncStorage.getItem("access_token");
@@ -83,6 +86,10 @@ function PassChangePage() {
         <CompletionContainer>
           <CompletionBox
             onPress={() => {
+              setUserInfo((prev) => ({
+                ...prev,
+                password: inputState.change_password,
+              }));
               navigatioin.navigate("ProfilePage");
               SavePassApi();
             }}

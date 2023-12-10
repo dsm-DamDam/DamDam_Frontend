@@ -1,7 +1,7 @@
 import { BASE_URL } from "@env";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import axios from "axios";
-import { useCallback, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { Image, Text, View } from "react-native";
 import { styled } from "styled-components/native";
 import { GetUserApi } from "../api/getUser";
@@ -12,17 +12,12 @@ import { theme } from "../style/theme";
 import ProgressCircleComponent from "../components/chart/ProgressCircleComponent";
 import ToDayTips from "../components/home/Tip/index";
 import { Pressable, TouchableOpacity } from "react-native";
+import { UserContext } from "../useContext/Context";
 
 function Home() {
   const navi = useNavigation();
   const [total_count, setTotal_count] = useState("");
   const [today, setToday] = useState("");
-  const [userInfo, setUserInfo] = useState({
-    email: "",
-    nickname: "",
-    userID: "",
-    password: "",
-  });
 
   // useFocusEffect(
   //   useCallback(() => {
@@ -31,6 +26,36 @@ function Home() {
   //     });
   //   }, [])
   // );
+
+  const { userInfo } = useContext(UserContext);
+
+  const [count, setCount] = useState(0);
+  const [time, setTime] = useState(5000);
+  const [loop, setLoop] = useState(0);
+
+  const [state, setState] = useState({
+    count: 0,
+    time: 6500,
+    loop: 0,
+  });
+
+  setTimeout(() => {
+    console.log(state.loop);
+    if (state.loop === 0) {
+      setState({
+        count: 1,
+        time: 7000,
+        loop: 1,
+      });
+    }
+    if (state.loop === 1) {
+      setState({
+        count: 3,
+        time: 7000,
+        loop: 2,
+      });
+    }
+  }, state.time);
 
   return (
     <Container>
@@ -48,7 +73,7 @@ function Home() {
             />
           </ProfileImgWrapper>
           <UserName>
-            <Text>{"테스트"}</Text>님, 안녕하세요
+            <Text>{userInfo.nickname}</Text>님, 안녕하세요
           </UserName>
         </Profile>
         {/* <PointText>400P</PointText> */}
@@ -60,8 +85,8 @@ function Home() {
           </DayCountText>
           {/* <ConnectionStatusIndicator /> */}
         </DayCountAndID>
-        <ProgressCircleComponent currentValue={0} maxValue={25} />
-        <NumberOfTime currentValue={0} />
+        <ProgressCircleComponent currentValue={state.count} maxValue={25} />
+        <NumberOfTime currentValue={state.count} />
       </Main>
       <Body>
         <ToDayTips />
