@@ -48,21 +48,23 @@ function Login() {
   return (
     <Container>
       <Logo source={require("../assets/images/LoginLogo.png")} />
-      <TextField_
-        value={inputValue.id}
-        onChangeText={(text) => {
-          setInputValue("id", text);
-        }}
-        placeholder="아이디"
-      />
-      <TextField_
-        value={inputValue.pw}
-        onChangeText={(text) => {
-          setInputValue("pw", text);
-        }}
-        placeholder="비밀번호"
-        passwordType
-      />
+      <TextFields>
+        <TextField_
+          value={inputValue.id}
+          onChangeText={(text) => {
+            setInputValue("id", text);
+          }}
+          placeholder="아이디"
+        />
+        <TextField_
+          value={inputValue.pw}
+          onChangeText={(text) => {
+            setInputValue("pw", text);
+          }}
+          placeholder="비밀번호"
+          passwordType
+        />
+      </TextFields>
       <CheckboxContainer>
         <Pressable
           onPress={() => {
@@ -94,6 +96,10 @@ const Container = styled(View)`
   padding: 71px 0 63px;
   align-items: center;
   background-color: ${theme.color.white};
+`;
+
+const TextFields = styled(View)`
+  width: 340px;
 `;
 
 const Logo = styled(Image)`
