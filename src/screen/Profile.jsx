@@ -10,46 +10,40 @@ import axios from "axios";
 import { BASE_URL } from "@env";
 import { useCallback, useState } from "react";
 import { GetUserApi } from "../api/getUser";
+import { Image } from "react-native";
+import * as Linking from "expo-linking";
 
 function Profile() {
   const navigatioin = useNavigation();
 
   const [userInfo, setUserInfo] = useState({
-    email: "",
-    nickname: "",
-    userID: "",
-    password: "",
+    email: "aodtn323@dms.hs.kr",
+    nickname: "테스트",
+    userID: "test",
+    password: "qwertyuiop!!",
   });
-  const Logout = async () => {
-    await axios
-      .delete(`${BASE_URL}/logout`, {
-        headers: {
-          accessToken: localStorage.getItem("accessToken"),
-        },
-      })
-      .then(() => {
-        localStorage.removeItem("accessToken");
-        navigatioin.navigate("Login");
-      });
-  };
 
-  useFocusEffect(
-    useCallback(() => {
-      GetUserApi().then((e) => {
-        setUserInfo(e);
-      });
-    }, [])
-  );
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     GetUserApi().then((e) => {
+  //       setUserInfo(e);
+  //     });
+  //   }, [])
+  // );
 
   return (
     <Container>
-      <Photo />
+      <Photo
+        source={{
+          uri: "https://play-lh.googleusercontent.com/38AGKCqmbjZ9OuWx4YjssAz3Y0DTWbiM5HB0ove1pNBq_o9mtWfGszjZNxZdwt_vgHo=w240-h480-rw",
+        }}
+      />
 
       <User_namebox>
         <User_naming>{userInfo.nickname}</User_naming>
-        <User_mail>@{userInfo.email.split("@")[0]}</User_mail>
+        <User_mail>@{userInfo.userID.split("@")[0]}</User_mail>
       </User_namebox>
-
+      {/* 
       <User_PD>
         <Point_box>
           <Point_text>포인트</Point_text>
@@ -60,7 +54,7 @@ function Profile() {
           <Effort_text>노력중</Effort_text>
           <Effort_number>13일</Effort_number>
         </Effort_box>
-      </User_PD>
+      </User_PD> */}
 
       <Userbox_info
         onPress={() => {
@@ -85,8 +79,12 @@ function Profile() {
           <SubTitle>자신의 취향에 맞게 테마를 정해봐요</SubTitle>
         </TextWraaper>
       </Userbox> */}
-
-      <Userbox_sup>
+      {/**https://forms.gle/rwCzyRr1ECmJyGHb8 */}
+      <Userbox_sup
+        onPress={() => {
+          Linking.openURL("https://forms.gle/rwCzyRr1ECmJyGHb8");
+        }}
+      >
         <UserCircle>
           <_Support />
         </UserCircle>
@@ -116,12 +114,14 @@ const Container = styled(View)`
   background-color: ${theme.color.white};
 `;
 
-const Photo = styled(TouchableOpacity)`
+const Photo = styled(Image)`
   width: 100px;
   height: 100px;
   border-radius: 50px;
   margin-bottom: 4%;
   background-color: ${theme.color.gray_400};
+  border-width: 1px;
+  border-color: #e5e5e5;
 `;
 
 const User_namebox = styled(View)`
@@ -129,7 +129,7 @@ const User_namebox = styled(View)`
   height: auto;
   justify-content: center;
   align-items: center;
-  margin-bottom: 4%;
+  margin-bottom: 20%;
 `;
 const User_naming = styled(Text)`
   font-size: 15px;

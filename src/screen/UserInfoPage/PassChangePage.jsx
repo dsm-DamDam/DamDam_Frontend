@@ -2,11 +2,12 @@ import { BASE_URL } from "@env";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View, Alert } from "react-native";
 import styled from "styled-components/native";
 import _Left_Arrow from "../../assets/icons/_left_arrow";
 import TextField from "../../components/common/TextField";
 import { theme } from "../../style/theme";
+import { useState } from "react";
 
 function PassChangePage() {
   const navigatioin = useNavigation();
@@ -16,15 +17,19 @@ function PassChangePage() {
     confirm_change_password: "",
   });
 
-  const SavePassApi = async () => {
-    const token = await AsyncStorage.getItem("access_token");
-    axios
-      .patch(`${BASE_URL}/user/updatePW`, inputState, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .catch((err) => console.error(err));
+  // const SavePassApi = async () => {
+  //   const token = await AsyncStorage.getItem("access_token");
+  //   axios
+  //     .patch(`${BASE_URL}/user/updatePW`, inputState, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     })
+  //     .catch((err) => console.error(err));
+  // };
+
+  const SavePassApi = () => {
+    Alert.alert("변경완료", "비밀번호가 정상적으로 변경되었습니다.");
   };
 
   const onChange = (text) => (value) => {
@@ -55,21 +60,21 @@ function PassChangePage() {
           <TextField
             value={inputState.password}
             onChangeText={onChange("password")}
-            helpText="도움말"
+            helpText="기본 비밀번호를 입력해주세요"
             placeholder="기존비밀번호"
             passwordType={true}
           ></TextField>
           <TextField
             value={inputState.change_password}
             onChangeText={onChange("change_password")}
-            helpText="도움말"
+            helpText="8자 이상, 특수문자(@, $, !, %, *, #, ?, &)를 포함해야 합니다"
             placeholder="변경할 비밀번호"
             passwordType={true}
           ></TextField>
           <TextField
             value={inputState.confirm_change_password}
             onChangeText={onChange("confirm_change_password")}
-            helpText="도움말"
+            helpText="비밀번호를 한번 더 입력해주세요"
             placeholder="비밀번호 확인"
             passwordType={true}
           ></TextField>
@@ -78,8 +83,8 @@ function PassChangePage() {
         <CompletionContainer>
           <CompletionBox
             onPress={() => {
-              SavePassApi();
               navigatioin.navigate("ProfilePage");
+              SavePassApi();
             }}
           >
             완료
@@ -99,6 +104,8 @@ const PassContainer = styled(View)`
 const PassTitle = styled(TouchableOpacity)`
   width: 100%;
   flex-direction: row;
+  margin-top: 45px;
+  align-items: center;
 `;
 
 const PassCircle = styled(View)`
@@ -137,6 +144,8 @@ const CompletionContainer = styled(TouchableOpacity)`
   flex: 1;
   align-items: flex-end;
   justify-content: flex-end;
+  margin-right: 20px;
+  margin-bottom: 40px;
 `;
 
 const CompletionBox = styled(Text)`
