@@ -10,6 +10,6 @@ export default function Promotion() {
 }
 
 const Container = styled(View)`
-  flex: 3;
+  flex: 2.5;
   width: 100%;
 `;

@@ -16,9 +16,9 @@ export default function NumberOfTime({ currentValue }) {
     <Container>
       <Times total_count={currentValue} day="오늘" />
       <Contour />
-      <Times total_count={3} day="이번주" />
+      <Times total_count={0} day="이번주" />
       <Contour />
-      <Times total_count={15} day="이번달" />
+      <Times total_count={0} day="이번달" />
     </Container>
   );
 }

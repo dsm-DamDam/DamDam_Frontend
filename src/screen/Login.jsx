@@ -42,7 +42,7 @@ function Login() {
   // };
 
   const LoginApi = () => {
-    navi.navigate("TapRouter");
+    navi.navigate("TabRouter");
   };
 
   return (
