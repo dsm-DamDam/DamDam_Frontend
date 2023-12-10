@@ -1,9 +1,10 @@
 import { useNavigation } from "@react-navigation/core";
-import { Image, Pressable, Text, View } from "react-native";
+import { Image, Pressable, Text, View, Alert } from "react-native";
 import styled from "styled-components/native";
 import TextField from "../../components/common/TextField";
 import { useInput } from "../../hooks/useInput";
 import { theme } from "../../style/theme";
+import { useState } from "react";
 
 function Signup_2() {
   const navi = useNavigation();
@@ -11,6 +12,17 @@ function Signup_2() {
     email: "",
     num: "",
   });
+
+  const [oneOfCheck, setOne] = useState(false);
+
+  const 이메일인증확인 = () => {
+    if (oneOfCheck) {
+      navi.navigate("Signup_3");
+      return;
+    }
+    Alert.alert("인증실패", "인증번호가 잘못되었습니다.");
+    setOne(true);
+  };
 
   return (
     <Container>
@@ -27,7 +39,12 @@ function Signup_2() {
         onChangeText={(text) => onChangeText("email", text)}
         placeholder="이메일"
       >
-        <Pressable disabled={!value.email}>
+        <Pressable
+          onPress={() => {
+            Alert.alert("이메일 인증", "이메일이 정상적으로 발송되었습니다.");
+          }}
+          disabled={!value.email}
+        >
           <Send>
             <SendT>발송</SendT>
           </Send>
@@ -46,9 +63,7 @@ function Signup_2() {
         </BackBox>
         <NextBox>
           <Pressable
-            onPress={() => {
-              navi.navigate("Signup_3");
-            }}
+            onPress={이메일인증확인}
             disabled={!value.email || !value.num}
           >
             <Next>다음</Next>
@@ -108,6 +123,7 @@ const Send = styled(View)`
 
 const SendT = styled(Text)`
   color: ${theme.color.white};
+  font-weight: 900;
 `;
 
 const MoveBox = styled(View)`
