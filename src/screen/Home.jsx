@@ -19,43 +19,17 @@ function Home() {
   const [total_count, setTotal_count] = useState("");
   const [today, setToday] = useState("");
 
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     GetUserApi().then((e) => {
-  //       setUserInfo(e);
-  //     });
-  //   }, [])
-  // );
+  const [userInfo, setUserInfo] = useState();
 
-  const { userInfo } = useContext(UserContext);
-
-  const [count, setCount] = useState(0);
-  const [time, setTime] = useState(5000);
-  const [loop, setLoop] = useState(0);
-
-  const [state, setState] = useState({
-    count: 0,
-    time: 6500,
-    loop: 0,
-  });
-
-  setTimeout(() => {
-    console.log(state.loop);
-    if (state.loop === 0) {
-      setState({
-        count: 1,
-        time: 7000,
-        loop: 1,
+  useFocusEffect(
+    useCallback(() => {
+      GetUserApi().then((e) => {
+        setUserInfo(e);
       });
-    }
-    if (state.loop === 1) {
-      setState({
-        count: 3,
-        time: 7000,
-        loop: 2,
-      });
-    }
-  }, state.time);
+    }, [])
+  );
+
+  // const { userInfo } = useContext(UserContext);
 
   return (
     <Container>

@@ -19,62 +19,69 @@ import { UserContext } from "../../useContext/Context";
 import { Image } from "react-native";
 
 function Profile() {
-  const { userInfo, setUserInfo } = useContext(UserContext);
-  console.log(userInfo);
-  const navigation = useNavigation();
-  const [baseState, setBaseState] = useState(userInfo);
+  // const { userInfo, setUserInfo } = useContext(UserContext);
 
-  const [inputState, setInputState] = useState(userInfo);
+  const initState = {
+    nickname: "",
+    userId: "",
+    email: "",
+    password: "",
+  };
+
+  const navigation = useNavigation();
+  const [baseState, setBaseState] = useState(initState);
+
+  const [inputState, setInputState] = useState(initState);
 
   const [disable, setDisable] = useState(false);
 
-  // const SaveDataApi = async () => {
-  //   const token = await AsyncStorage.getItem("access_token");
-  //   axios
-  //     .patch(
-  //       `${BASE_URL}/user/updateInfo`,
-  //       {
-  //         new_nickname: inputState.nickname,
-  //         new_userID: inputState.userID,
-  //         // password: inputState.password,
-  //       },
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       }
-  //     )
-  //     .then((res) => {
-  //       console.log(res);
-  //     })
-  //     .catch((err) => console.error(err));
+  const SaveDataApi = async () => {
+    const token = await AsyncStorage.getItem("access_token");
+    axios
+      .patch(
+        `${BASE_URL}/user/updateInfo`,
+        {
+          new_nickname: inputState.nickname,
+          new_userID: inputState.userID,
+          // password: inputState.password,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.error(err));
 
-  //   setDisable(false);
-  // };
-
-  const SaveDataApi = () => {
-    console.log("inputState" + inputState.nickname, inputState.userId);
-    setUserInfo((prev) => ({
-      ...prev,
-      nickname: inputState.nickname,
-      userId: inputState.userId,
-    }));
-    navigation.navigate("ProfilePage");
-    Alert.alert("수정완료", "유저정보가 성공적으로 변경되었습니다.");
+    setDisable(false);
   };
+
+  // const SaveDataApi = () => {
+  //   console.log("inputState" + inputState.nickname, inputState.userId);
+  //   setUserInfo((prev) => ({
+  //     ...prev,
+  //     nickname: inputState.nickname,
+  //     userId: inputState.userId,
+  //   }));
+  //   navigation.navigate("ProfilePage");
+  //   Alert.alert("수정완료", "유저정보가 성공적으로 변경되었습니다.");
+  // };
 
   const onChange = (text, value) => {
     setInputState((prevstate) => ({ ...prevstate, [text]: value }));
   };
 
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     GetUserApi().then((e) => {
-  //       setInputState(e);
-  //       setBaseState(e);
-  //     });
-  //   }, [])
-  // );
+  useFocusEffect(
+    useCallback(() => {
+      GetUserApi().then((e) => {
+        setInputState(e);
+        setBaseState(e);
+      });
+    }, [])
+  );
 
   useEffect(() => {
     if (

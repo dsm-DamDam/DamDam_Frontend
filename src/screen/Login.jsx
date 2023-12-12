@@ -21,27 +21,7 @@ function Login() {
   //userID - dsm0000
   //PW - dsm2310!
 
-  // const LoginApi = async () => {
-  //   navi.navigate("TabRouter");
-  //   await axios
-  //     .post(`${BASE_URL}/user/login`, {
-  //       userID: inputValue.id,
-  //       password: inputValue.pw,
-  //     })
-  //     .then(async (response) => {
-  //       const token = response.data.access_token;
-  //       if (token) {
-  //         console.log("토큰 = " + token);
-  //         await AsyncStorage.setItem("access_token", token);
-  //         navi.navigate("TabRouter");
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // };
-
-  const LoginApi = () => {
+  const LoginApi = async () => {
     navi.navigate("TabRouter");
     await axios
       .post(`${BASE_URL}/user/login`, {
@@ -51,6 +31,7 @@ function Login() {
       .then(async (response) => {
         const token = response.data.access_token;
         if (token) {
+          console.log("토큰 = " + token);
           await AsyncStorage.setItem("access_token", token);
           navi.navigate("TabRouter");
         }

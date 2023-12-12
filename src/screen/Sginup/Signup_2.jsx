@@ -13,17 +13,6 @@ function Signup_2() {
     num: "",
   });
 
-  const [oneOfCheck, setOne] = useState(false);
-
-  const 이메일인증확인 = () => {
-    if (oneOfCheck) {
-      navi.navigate("Signup_3");
-      return;
-    }
-    Alert.alert("인증실패", "인증번호가 잘못되었습니다.");
-    setOne(true);
-  };
-
   return (
     <Container>
       <Pressable onPress={() => navi.navigate("Login")}>
@@ -63,7 +52,9 @@ function Signup_2() {
         </BackBox>
         <NextBox>
           <Pressable
-            onPress={이메일인증확인}
+            onPress={() => {
+              navi.navigate("Signup_3");
+            }}
             disabled={!value.email || !value.num}
           >
             <Next>다음</Next>

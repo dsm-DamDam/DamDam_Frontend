@@ -17,23 +17,22 @@ function PassChangePage() {
     change_password: "",
     confirm_change_password: "",
   });
-  const { userInfo, setUserInfo } = useContext(UserContext);
-  console.log(userInfo);
+  // const { userInfo, setUserInfo } = useContext(UserContext);
 
-  // const SavePassApi = async () => {
-  //   const token = await AsyncStorage.getItem("access_token");
-  //   axios
-  //     .patch(`${BASE_URL}/user/updatePW`, inputState, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     })
-  //     .catch((err) => console.error(err));
-  // };
-
-  const SavePassApi = () => {
-    Alert.alert("변경완료", "비밀번호가 정상적으로 변경되었습니다.");
+  const SavePassApi = async () => {
+    const token = await AsyncStorage.getItem("access_token");
+    axios
+      .patch(`${BASE_URL}/user/updatePW`, inputState, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .catch((err) => console.error(err));
   };
+
+  // const SavePassApi = () => {
+  //   Alert.alert("변경완료", "비밀번호가 정상적으로 변경되었습니다.");
+  // };
 
   const onChange = (text) => (value) => {
     setInputState((prevstate) => ({ ...prevstate, [text]: value }));
@@ -86,10 +85,10 @@ function PassChangePage() {
         <CompletionContainer>
           <CompletionBox
             onPress={() => {
-              setUserInfo((prev) => ({
-                ...prev,
-                password: inputState.change_password,
-              }));
+              // setUserInfo((prev) => ({
+              //   ...prev,
+              //   password: inputState.change_password,
+              // }));
               navigatioin.navigate("ProfilePage");
               SavePassApi();
             }}

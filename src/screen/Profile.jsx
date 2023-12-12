@@ -1,31 +1,29 @@
-import { Text, View, TouchableOpacity } from "react-native";
-import styled from "styled-components/native";
-import { theme } from "../style/theme";
-import _User_info from "../assets/icons/_user_info";
-import _Light_Mode from "../assets/icons/_light_mode";
-import _Support from "../assets/icons/_support";
-import _Logout from "../assets/icons/_logout";
-import { useNavigation, useFocusEffect } from "@react-navigation/native";
-import axios from "axios";
-import { BASE_URL } from "@env";
-import { useCallback, useContext, useState } from "react";
-import { GetUserApi } from "../api/getUser";
-import { Image } from "react-native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import * as Linking from "expo-linking";
+import { useCallback, useContext, useState } from "react";
+import { Image, Text, TouchableOpacity, View } from "react-native";
+import styled from "styled-components/native";
+import { GetUserApi } from "../api/getUser";
+import _Logout from "../assets/icons/_logout";
+import _Support from "../assets/icons/_support";
+import _User_info from "../assets/icons/_user_info";
+import { theme } from "../style/theme";
 import { UserContext } from "../useContext/Context";
 
 function Profile() {
   const navigatioin = useNavigation();
 
-  const { userInfo } = useContext(UserContext);
+  const [userInfo, setUserInfo] = useState();
 
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     GetUserApi().then((e) => {
-  //       setUserInfo(e);
-  //     });
-  //   }, [])
-  // );
+  // const { userInfo } = useContext(UserContext);
+
+  useFocusEffect(
+    useCallback(() => {
+      GetUserApi().then((e) => {
+        setUserInfo(e);
+      });
+    }, [])
+  );
 
   return (
     <Container>
@@ -39,7 +37,7 @@ function Profile() {
         <User_naming>{userInfo.nickname}</User_naming>
         <User_mail>@{userInfo.userId.split("@")[0]}</User_mail>
       </User_namebox>
-      {/* 
+
       <User_PD>
         <Point_box>
           <Point_text>포인트</Point_text>
@@ -50,7 +48,7 @@ function Profile() {
           <Effort_text>노력중</Effort_text>
           <Effort_number>13일</Effort_number>
         </Effort_box>
-      </User_PD> */}
+      </User_PD>
 
       <Userbox_info
         onPress={() => {
@@ -75,7 +73,6 @@ function Profile() {
           <SubTitle>자신의 취향에 맞게 테마를 정해봐요</SubTitle>
         </TextWraaper>
       </Userbox> */}
-      {/**https://forms.gle/rwCzyRr1ECmJyGHb8 */}
       <Userbox_sup
         onPress={() => {
           Linking.openURL("https://forms.gle/rwCzyRr1ECmJyGHb8");
