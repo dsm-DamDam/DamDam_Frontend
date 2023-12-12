@@ -31,7 +31,6 @@ function Login() {
       .then(async (response) => {
         const token = response.data.access_token;
         if (token) {
-          console.log("토큰 = " + token);
           await AsyncStorage.setItem("access_token", token);
           navi.navigate("TabRouter");
         }

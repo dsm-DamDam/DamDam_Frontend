@@ -11,10 +11,7 @@ export const GetUserApi = async () => {
         Authorization: `Bearer ${token}`,
       },
     })
-    .then(({ data }) => {
-      console.log(data);
-      return data;
-    })
+    .then(({ data }) => data)
     .catch((error) => {
       console.error(error);
       return {
