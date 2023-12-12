@@ -43,6 +43,21 @@ function Login() {
 
   const LoginApi = () => {
     navi.navigate("TabRouter");
+    await axios
+      .post(`${BASE_URL}/user/login`, {
+        userID: inputValue.id,
+        password: inputValue.pw,
+      })
+      .then(async (response) => {
+        const token = response.data.access_token;
+        if (token) {
+          await AsyncStorage.setItem("access_token", token);
+          navi.navigate("TabRouter");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
