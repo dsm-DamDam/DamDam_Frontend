@@ -19,7 +19,7 @@ function Signup_1() {
       </Pressable>
       <Title>인증코드 입력</Title>
       <Sub>제품 하단에 인증코드가 표기되어있어요</Sub>
-      <TextField_
+      <TextField
         value={value.code}
         onChangeText={(text) => {
           onChangeText("code", text);
@@ -73,7 +73,9 @@ const Sub = styled(Text)`
   margin-bottom: 70px;
 `;
 
-const TextField_ = styled(TextField)``;
+const TextField_ = styled(TextField)`
+
+`;
 
 const NextBox = styled(View)`
   margin-top: 380px;

@@ -21,44 +21,50 @@ function Login() {
   //userID - dsm0000
   //PW - dsm2310!
 
-  const LoginApi = async () => {
+  // const LoginApi = async () => {
+  //   navi.navigate("TabRouter");
+  //   await axios
+  //     .post(`${BASE_URL}/user/login`, {
+  //       userID: inputValue.id,
+  //       password: inputValue.pw,
+  //     })
+  //     .then(async (response) => {
+  //       const token = response.data.access_token;
+  //       if (token) {
+  //         console.log("토큰 = " + token);
+  //         await AsyncStorage.setItem("access_token", token);
+  //         navi.navigate("TabRouter");
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // };
+
+  const LoginApi = () => {
     navi.navigate("TabRouter");
-    await axios
-      .post(`${BASE_URL}/user/login`, {
-        userID: inputValue.id,
-        password: inputValue.pw,
-      })
-      .then(async (response) => {
-        const token = response.data.access_token;
-        if (token) {
-          console.log("토큰 = " + token);
-          await AsyncStorage.setItem("access_token", token);
-          navi.navigate("TabRouter");
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
   };
 
   return (
     <Container>
       <Logo source={require("../assets/images/LoginLogo.png")} />
-      <TextField_
-        value={inputValue.id}
-        onChangeText={(text) => {
-          setInputValue("id", text);
-        }}
-        placeholder="아이디"
-      />
-      <TextField_
-        value={inputValue.pw}
-        onChangeText={(text) => {
-          setInputValue("pw", text);
-        }}
-        placeholder="비밀번호"
-        passwordType
-      />
+      <TextFields>
+        <TextField_
+          value={inputValue.id}
+          onChangeText={(text) => {
+            setInputValue("id", text);
+          }}
+          placeholder="아이디"
+        />
+        <TextField_
+          value={inputValue.pw}
+          onChangeText={(text) => {
+            setInputValue("pw", text);
+          }}
+          placeholder="비밀번호"
+          passwordType
+        />
+      </TextFields>
       <CheckboxContainer>
         <Pressable
           onPress={() => {
@@ -70,9 +76,12 @@ function Login() {
         <AutoText>자동 로그인</AutoText>
       </CheckboxContainer>
 
-      <Pressable onPress={LoginApi} disabled={!inputValue.id || !inputValue.pw}>
-        <LoginButton>로그인</LoginButton>
-      </Pressable>
+      <LoginButton
+        onPress={LoginApi}
+        disabled={!inputValue.id || !inputValue.pw}
+      >
+        <LoginText>로그인</LoginText>
+      </LoginButton>
       <SUBox>
         <NotMember>아직 회원이 아니신가요?</NotMember>
         <SignUp onPress={() => navi.navigate("Signup_1")}>회원가입</SignUp>
@@ -87,6 +96,10 @@ const Container = styled(View)`
   padding: 71px 0 63px;
   align-items: center;
   background-color: ${theme.color.white};
+`;
+
+const TextFields = styled(View)`
+  width: 340px;
 `;
 
 const Logo = styled(Image)`
@@ -117,17 +130,22 @@ const AutoText = styled(Text)`
   color: ${theme.color.gray_600};
 `;
 
-const LoginButton = styled(Text)`
+const LoginButton = styled(Pressable)`
   width: 340px;
   height: 60px;
-  text-align: center;
   vertical-align: middle;
-  color: ${theme.color.white};
-  font-size: 18px;
-  font-weight: 600;
   background-color: ${theme.color.brand_color};
   border-radius: 2px;
   margin-bottom: 24px;
+  align-items: center;
+  justify-content: center;
+`;
+
+const LoginText = styled(Text)`
+  color: ${theme.color.white};
+  font-size: 20px;
+  font-weight: 900;
+  text-align: center;
 `;
 
 const SUBox = styled(View)`

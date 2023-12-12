@@ -2,78 +2,84 @@ import { BASE_URL } from "@env";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import axios from "axios";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import {
   KeyboardAvoidingView,
   Platform,
   Text,
   TouchableOpacity,
-  View
+  View,
+  Alert,
 } from "react-native";
 import styled from "styled-components/native";
 import { GetUserApi } from "../../api/getUser";
 import TextField from "../../components/common/TextField";
 import { theme } from "../../style/theme";
+import { UserContext } from "../../useContext/Context";
+import { Image } from "react-native";
 
 function Profile() {
+  const { userInfo, setUserInfo } = useContext(UserContext);
+  console.log(userInfo);
   const navigation = useNavigation();
-  const [baseState, setBaseState] = useState({
-    nickname: "",
-    userID: "",
-    email: "",
-    password: "",
-  });
+  const [baseState, setBaseState] = useState(userInfo);
 
-  const [inputState, setInputState] = useState({
-    nickname: "",
-    userID: "",
-    email: "",
-    password: "",
-  });
+  const [inputState, setInputState] = useState(userInfo);
 
   const [disable, setDisable] = useState(false);
 
-  const SaveDataApi = async () => {
-    const token = await AsyncStorage.getItem("access_token");
-    axios
-      .patch(
-        `${BASE_URL}/user/updateInfo`,
-        {
-          new_nickname: inputState.nickname,
-          new_userID: inputState.userID,
-          // password: inputState.password,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => console.error(err));
+  // const SaveDataApi = async () => {
+  //   const token = await AsyncStorage.getItem("access_token");
+  //   axios
+  //     .patch(
+  //       `${BASE_URL}/user/updateInfo`,
+  //       {
+  //         new_nickname: inputState.nickname,
+  //         new_userID: inputState.userID,
+  //         // password: inputState.password,
+  //       },
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     )
+  //     .then((res) => {
+  //       console.log(res);
+  //     })
+  //     .catch((err) => console.error(err));
 
-    setDisable(false);
+  //   setDisable(false);
+  // };
+
+  const SaveDataApi = () => {
+    console.log("inputState" + inputState.nickname, inputState.userId);
+    setUserInfo((prev) => ({
+      ...prev,
+      nickname: inputState.nickname,
+      userId: inputState.userId,
+    }));
+    navigation.navigate("ProfilePage");
+    Alert.alert("수정완료", "유저정보가 성공적으로 변경되었습니다.");
   };
 
-  const onChange = (text) => (value) => {
+  const onChange = (text, value) => {
     setInputState((prevstate) => ({ ...prevstate, [text]: value }));
   };
 
-  useFocusEffect(
-    useCallback(() => {
-      GetUserApi().then((e) => {
-        setInputState(e);
-        setBaseState(e);
-      });
-    }, [])
-  );
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     GetUserApi().then((e) => {
+  //       setInputState(e);
+  //       setBaseState(e);
+  //     });
+  //   }, [])
+  // );
 
   useEffect(() => {
     if (
       inputState.nickname !== baseState.nickname ||
-      inputState.userID !== baseState.userID
+      inputState.userId !== baseState.userId
     ) {
       setDisable(true);
     } else {
@@ -87,63 +93,74 @@ function Profile() {
       behavior={Platform.OS === "ios" ? "padding" : undefined}
     >
       <InfoContainer>
-        {!!disable && (
-          <ActoContainer>
-            <ActionToast>변경사항을 저장할까요?</ActionToast>
-            <ActoBtnContainer>
-              <ActoBtnCancel onPress={() => setInputState(baseState)}>
-                <ActoTextCancel>취소</ActoTextCancel>
-              </ActoBtnCancel>
-              <ActoBtnSave onPress={() => SaveDataApi()}>
-                <ActoTextSave>저장</ActoTextSave>
-              </ActoBtnSave>
-            </ActoBtnContainer>
-          </ActoContainer>
-        )}
+        <TextFileds>
+          {!!disable && (
+            <ActoContainer>
+              <ActionToast>변경사항을 저장할까요?</ActionToast>
+              <ActoBtnContainer>
+                <ActoBtnCancel onPress={() => setInputState(baseState)}>
+                  <ActoTextCancel>취소</ActoTextCancel>
+                </ActoBtnCancel>
+                <ActoBtnSave onPress={() => SaveDataApi()}>
+                  <ActoTextSave>저장</ActoTextSave>
+                </ActoBtnSave>
+              </ActoBtnContainer>
+            </ActoContainer>
+          )}
 
-        <InfoTitle>
-          <MainName>회원정보</MainName>
-        </InfoTitle>
-        <InfoPhoto />
-        <InfoNameBox>
-          <TitleName>닉네임</TitleName>
-          <TextField
-            value={inputState ? inputState.nickname : ""}
-            onChangeText={onChange("nickname")}
-          ></TextField>
-        </InfoNameBox>
-        <InfoNameBox>
-          <TitleName>아이디</TitleName>
-          <TextField
-            value={inputState ? inputState.userID : ""}
-            onChangeText={onChange("userID")}
-          ></TextField>
-        </InfoNameBox>
-        <InfoNameBox>
-          <TitleName>이메일</TitleName>
-          <TextField
-            value={inputState ? inputState.email : ""}
-            onChangeText={onChange("email")}
-            disable={true}
-          ></TextField>
-        </InfoNameBox>
-        <InfoNameBox>
-          <TitleName>비밀번호</TitleName>
-          <TextField
-            disable={true}
-            value={"*".repeat(
-              inputState && inputState.password ? inputState.password.length : 0
-            )}
-          >
-            <PassChangeBox
-              onPress={() => {
-                navigation.navigate("PassChangePage");
+          <InfoTitle>
+            <MainName>회원정보</MainName>
+          </InfoTitle>
+          <InfoPhoto
+            source={{
+              uri: "https://play-lh.googleusercontent.com/38AGKCqmbjZ9OuWx4YjssAz3Y0DTWbiM5HB0ove1pNBq_o9mtWfGszjZNxZdwt_vgHo=w240-h480-rw",
+            }}
+          />
+          <InfoNameBox>
+            <TitleName>닉네임</TitleName>
+            <TextField
+              value={inputState ? inputState.nickname : ""}
+              onChangeText={(value) => {
+                onChange("nickname", value);
               }}
+            ></TextField>
+          </InfoNameBox>
+          <InfoNameBox>
+            <TitleName>아이디</TitleName>
+            <TextField
+              value={inputState ? inputState.userId : ""}
+              onChangeText={(value) => {
+                onChange("userId", value);
+              }}
+            ></TextField>
+          </InfoNameBox>
+          <InfoNameBox>
+            <TitleName>이메일</TitleName>
+            <TextField
+              value={inputState ? inputState.email : ""}
+              disable={true}
+            ></TextField>
+          </InfoNameBox>
+          <InfoNameBox>
+            <TitleName>비밀번호</TitleName>
+            <TextField
+              disable={true}
+              value={"*".repeat(
+                inputState && inputState.password
+                  ? inputState.password.length
+                  : 0
+              )}
             >
-              <PassChangeText>수정</PassChangeText>
-            </PassChangeBox>
-          </TextField>
-        </InfoNameBox>
+              <PassChangeBox
+                onPress={() => {
+                  navigation.navigate("PassChangePage");
+                }}
+              >
+                <PassChangeText>수정</PassChangeText>
+              </PassChangeBox>
+            </TextField>
+          </InfoNameBox>
+        </TextFileds>
       </InfoContainer>
     </KeyboardAvoidingView>
   );
@@ -151,9 +168,13 @@ function Profile() {
 
 const InfoContainer = styled(View)`
   flex: 1;
-  padding-top: 5%;
+  padding-top: 60px;
   align-items: center;
   background-color: ${theme.color.white};
+`;
+
+const TextFileds = styled(View)`
+  width: 320px;
 `;
 
 const ActoContainer = styled(View)`
@@ -225,21 +246,25 @@ const MainName = styled(Text)`
   color: ${theme.color.gray_700};
 `;
 
-const InfoPhoto = styled(TouchableOpacity)`
+const InfoPhoto = styled(Image)`
   width: 100px;
   height: 100px;
   border-radius: 50px;
   margin-bottom: 10%;
   background-color: ${theme.color.gray_400};
+  border-color: #e5e5e5;
+  border-width: 1px;
 `;
 
 const InfoNameBox = styled(View)`
   width: auto;
   height: auto;
+  gap: 5px;
 `;
 
 const TitleName = styled(Text)`
-  font-size: 10px;
+  font-size: 14px;
+  color: #7f7f7f;
 `;
 
 const PassChangeBox = styled(TouchableOpacity)`
