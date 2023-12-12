@@ -6,23 +6,25 @@ import Calender from "../screen/Calender";
 import Diary from "../screen/Diary";
 import ProfileRouter from "./ProfileRouter";
 import ShopRouter from "./Shop/ShopRouter";
+import { createStackNavigator } from "@react-navigation/stack";
 
 export default function TabRouter() {
   const Tab = createBottomTabNavigator();
+  const Stack = createStackNavigator();
 
   return (
-    <Tab.Navigator
+    <Stack.Navigator
       initialRouteName="Home"
       screenOptions={{
         headerShown: false,
       }}
-      tabBar={() => <TabBar />}
+      // tabBar={() => <TabBar />}
     >
-      <Tab.Screen name="Calender" component={Calender} />
-      <Tab.Screen name="Diary" component={Diary} />
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Shop" component={ShopRouter} />
-      <Tab.Screen name="Profile" component={ProfileRouter} />
-    </Tab.Navigator>
+      <Stack.Screen name="Calender" component={Calender} />
+      <Stack.Screen name="Diary" component={Diary} />
+      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="Shop" component={ShopRouter} />
+      <Stack.Screen name="Profile" component={ProfileRouter} />
+    </Stack.Navigator>
   );
 }

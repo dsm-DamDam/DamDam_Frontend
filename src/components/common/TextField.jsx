@@ -87,7 +87,7 @@ const style = StyleSheet.create({
 });
 
 const Container = styled(View)`
-  width: 340px;
+  width: 100%;
   margin-bottom: 14px;
 `;
 

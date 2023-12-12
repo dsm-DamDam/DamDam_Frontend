@@ -1,7 +1,7 @@
 import { BASE_URL } from "@env";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import axios from "axios";
-import { useCallback, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { Image, Text, View } from "react-native";
 import { styled } from "styled-components/native";
 import { GetUserApi } from "../api/getUser";
@@ -11,64 +11,82 @@ import Promotion from "../components/home/Promotion";
 import { theme } from "../style/theme";
 import ProgressCircleComponent from "../components/chart/ProgressCircleComponent";
 import ToDayTips from "../components/home/Tip/index";
+import { Pressable, TouchableOpacity } from "react-native";
+import { UserContext } from "../useContext/Context";
 
 function Home() {
+  const navi = useNavigation();
   const [total_count, setTotal_count] = useState("");
   const [today, setToday] = useState("");
-  const [userInfo, setUserInfo] = useState({
-    email: "",
-    nickname: "",
-    userID: "",
-    password: "",
+
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     GetUserApi().then((e) => {
+  //       setUserInfo(e);
+  //     });
+  //   }, [])
+  // );
+
+  const { userInfo } = useContext(UserContext);
+
+  const [count, setCount] = useState(0);
+  const [time, setTime] = useState(5000);
+  const [loop, setLoop] = useState(0);
+
+  const [state, setState] = useState({
+    count: 0,
+    time: 6500,
+    loop: 0,
   });
 
-  const GetData = () => {
-    axios({
-      method: "GET",
-      url: `${BASE_URL}/item/daily-total-cnt`,
-    })
-      .then((res) => {
-        setTotal_count(res.data.total_count);
-      })
-      .catch((err) => {
-        console.error(err);
+  setTimeout(() => {
+    console.log(state.loop);
+    if (state.loop === 0) {
+      setState({
+        count: 1,
+        time: 7000,
+        loop: 1,
       });
-  };
-
-  useFocusEffect(
-    useCallback(() => {
-      GetUserApi().then((e) => {
-        setUserInfo(e);
+    }
+    if (state.loop === 1) {
+      setState({
+        count: 3,
+        time: 7000,
+        loop: 2,
       });
-    }, [])
-  );
+    }
+  }, state.time);
 
   return (
     <Container>
       <Header>
-        <Profile>
+        <Profile
+          onPress={() => {
+            navi.navigate("Profile");
+          }}
+        >
           <ProfileImgWrapper>
             <ProfileImg
               source={{
-                uri: "https://upload.wikimedia.org/wikipedia/commons/7/7c/%ED%94%84%EB%A1%9C%ED%95%84%28%EC%A0%95%EB%A9%B4%29.jpg",
+                uri: "https://play-lh.googleusercontent.com/38AGKCqmbjZ9OuWx4YjssAz3Y0DTWbiM5HB0ove1pNBq_o9mtWfGszjZNxZdwt_vgHo=w240-h480-rw",
               }}
             />
           </ProfileImgWrapper>
           <UserName>
-            <Text>{userInfo.nickname}</Text> 안녕하세요
+            <Text>{userInfo.nickname}</Text>님, 안녕하세요
           </UserName>
         </Profile>
-        <PointText>400P</PointText>
+        {/* <PointText>400P</PointText> */}
       </Header>
       <Main>
         <DayCountAndID>
           <DayCountText>
-            <DayValue>{13}</DayValue> 일째 노력 중
+            {/* <DayValue>{13}</DayValue> 일째 노력 중 */}
           </DayCountText>
-          <ConnectionStatusIndicator />
+          {/* <ConnectionStatusIndicator /> */}
         </DayCountAndID>
-        <ProgressCircleComponent currentValue={total_count} maxValue={25} />
-        <NumberOfTime currentValue={total_count} />
+        <ProgressCircleComponent currentValue={state.count} maxValue={25} />
+        <NumberOfTime currentValue={state.count} />
       </Main>
       <Body>
         <ToDayTips />
@@ -82,6 +100,7 @@ const Container = styled(View)`
   flex: 1;
   justify-content: center;
   align-items: center;
+  margin-top: 20px;
 `;
 const Header = styled(View)`
   width: 100%;
@@ -91,7 +110,7 @@ const Header = styled(View)`
   flex-direction: row;
   padding: 0 5%;
 `;
-const Profile = styled(View)`
+const Profile = styled(TouchableOpacity)`
   height: 100%;
   align-items: center;
   flex-direction: row;

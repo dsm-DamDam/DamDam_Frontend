@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import "react-native-gesture-handler";
 import { setCustomText } from "react-native-global-props";
 import LoginRouter from "./src/Router/LoginRouter";
-import { TapContext } from "./src/useContext/Context";
+import { TapContext, UserContext } from "./src/useContext/Context";
 import { Text } from "react-native";
 
 export default function App() {
@@ -42,6 +42,12 @@ export default function App() {
   }, [isReady]);
 
   const [moveTapState, setMoveTapState] = useState("Home");
+  const [userInfo, setUserInfo] = useState({
+    nickname: "테스트",
+    userId: "test",
+    email: "aodtn323@dsm.hs.kr",
+    password: "qwertyuiop!!",
+  });
 
   if (!isReady) {
     return (
@@ -52,8 +58,10 @@ export default function App() {
     );
   }
   return (
-    <TapContext.Provider value={{ moveTapState, setMoveTapState }}>
-      <LoginRouter />
-    </TapContext.Provider>
+    <UserContext.Provider value={{ userInfo, setUserInfo }}>
+      <TapContext.Provider value={{ moveTapState, setMoveTapState }}>
+        <LoginRouter />
+      </TapContext.Provider>
+    </UserContext.Provider>
   );
 }

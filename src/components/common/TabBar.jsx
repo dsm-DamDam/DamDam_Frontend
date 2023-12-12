@@ -45,6 +45,7 @@ const Container = styled(View)`
   flex-direction: row;
   gap: 10px;
   box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.05);
+  padding-bottom: 15px;
 `;
 
 const TabBox = styled(TouchableOpacity)`
