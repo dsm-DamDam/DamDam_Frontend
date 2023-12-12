@@ -2,13 +2,12 @@ import { BASE_URL } from "@env";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
-import { Text, TouchableOpacity, View, Alert } from "react-native";
+import { useState } from "react";
+import { Text, TouchableOpacity, View } from "react-native";
 import styled from "styled-components/native";
 import _Left_Arrow from "../../assets/icons/_left_arrow";
 import TextField from "../../components/common/TextField";
 import { theme } from "../../style/theme";
-import { useContext, useState } from "react";
-import { UserContext } from "../../useContext/Context";
 
 function PassChangePage() {
   const navigatioin = useNavigation();

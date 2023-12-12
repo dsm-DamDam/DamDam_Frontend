@@ -2,21 +2,19 @@ import { BASE_URL } from "@env";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import axios from "axios";
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
+  Image,
   KeyboardAvoidingView,
   Platform,
   Text,
   TouchableOpacity,
-  View,
-  Alert,
+  View
 } from "react-native";
 import styled from "styled-components/native";
 import { GetUserApi } from "../../api/getUser";
 import TextField from "../../components/common/TextField";
 import { theme } from "../../style/theme";
-import { UserContext } from "../../useContext/Context";
-import { Image } from "react-native";
 
 function Profile() {
   // const { userInfo, setUserInfo } = useContext(UserContext);

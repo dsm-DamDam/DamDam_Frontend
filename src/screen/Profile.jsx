@@ -1,6 +1,6 @@
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import * as Linking from "expo-linking";
-import { useCallback, useContext, useState } from "react";
+import { useCallback, useState } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import styled from "styled-components/native";
 import { GetUserApi } from "../api/getUser";
@@ -8,7 +8,6 @@ import _Logout from "../assets/icons/_logout";
 import _Support from "../assets/icons/_support";
 import _User_info from "../assets/icons/_user_info";
 import { theme } from "../style/theme";
-import { UserContext } from "../useContext/Context";
 
 function Profile() {
   const navigatioin = useNavigation();

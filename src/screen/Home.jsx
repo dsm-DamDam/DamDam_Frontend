@@ -1,18 +1,13 @@
-import { BASE_URL } from "@env";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import axios from "axios";
-import { useCallback, useContext, useState } from "react";
-import { Image, Text, View } from "react-native";
+import { useCallback, useState } from "react";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import { styled } from "styled-components/native";
 import { GetUserApi } from "../api/getUser";
-import ConnectionStatusIndicator from "../components/home/ConnectionStatusIndicator";
+import ProgressCircleComponent from "../components/chart/ProgressCircleComponent";
 import NumberOfTime from "../components/home/NumberOfTime";
 import Promotion from "../components/home/Promotion";
-import { theme } from "../style/theme";
-import ProgressCircleComponent from "../components/chart/ProgressCircleComponent";
 import ToDayTips from "../components/home/Tip/index";
-import { Pressable, TouchableOpacity } from "react-native";
-import { UserContext } from "../useContext/Context";
+import { theme } from "../style/theme";
 
 function Home() {
   const navi = useNavigation();

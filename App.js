@@ -1,11 +1,11 @@
 import * as Font from "expo-font";
 import { StatusBar } from "expo-status-bar";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Text } from "react-native";
 import "react-native-gesture-handler";
 import { setCustomText } from "react-native-global-props";
 import LoginRouter from "./src/Router/LoginRouter";
-import { TapContext, UserContext } from "./src/useContext/Context";
-import { Text } from "react-native";
+import { TapContext } from "./src/useContext/Context";
 
 export default function App() {
   const [isReady, setIsReady] = useState(false);
@@ -58,10 +58,8 @@ export default function App() {
     );
   }
   return (
-    <UserContext.Provider value={{ userInfo, setUserInfo }}>
-      <TapContext.Provider value={{ moveTapState, setMoveTapState }}>
-        <LoginRouter />
-      </TapContext.Provider>
-    </UserContext.Provider>
+    <TapContext.Provider value={{ moveTapState, setMoveTapState }}>
+      <LoginRouter />
+    </TapContext.Provider>
   );
 }
